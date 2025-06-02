@@ -18,4 +18,8 @@ option (on 10-30% of trials) to swap the wrong direction or temporal frequency o
   next, within the familiar stimuli ie b-c-d turns into b-c-d (with angle or speed from stimuli a)
 
 
-  Need to integrate lick input,
+  Need to integrate lick input after last stimuli in each trial is presented
+if mouse licks on correct, then reward, and reward tone->next trial start
+if mouse licks on incorrect, no reward, time out (different background color, black?), white noise->next trial start
+
+speed detection, lick rate detection
