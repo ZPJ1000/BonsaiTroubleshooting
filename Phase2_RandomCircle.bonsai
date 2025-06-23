@@ -84,7 +84,7 @@
         <Name>Draw</Name>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
-        <Name>Stimulus</Name>
+        <Name>GrateSequence</Name>
       </Expression>
       <Expression xsi:type="PropertyMapping">
         <PropertyMappings>
@@ -99,9 +99,9 @@
         <ExtentX>1</ExtentX>
         <ExtentY>1</ExtentY>
         <SpatialFrequency>10</SpatialFrequency>
-        <TemporalFrequency>0</TemporalFrequency>
+        <TemporalFrequency>2</TemporalFrequency>
         <Phase>0</Phase>
-        <Angle>0</Angle>
+        <Angle>90</Angle>
         <SquareWave>false</SquareWave>
         <Contrast>1</Contrast>
         <DutyCycle xsi:nil="true" />
@@ -222,19 +222,15 @@
       <Expression xsi:type="SubscribeSubject">
         <Name>Draw</Name>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="SubscribeSubject">
-          <Name>circleParams</Name>
-        </Builder>
+      <Expression xsi:type="SubscribeSubject">
+        <Name>IncorrectCircle</Name>
       </Expression>
-      <Expression xsi:type="Disable">
-        <Builder xsi:type="PropertyMapping">
-          <PropertyMappings>
-            <Property Name="ColorA" Selector="Item1" />
-            <Property Name="ColorB" Selector="Item2" />
-            <Property Name="ColorG" Selector="Item3" />
-          </PropertyMappings>
-        </Builder>
+      <Expression xsi:type="PropertyMapping">
+        <PropertyMappings>
+          <Property Name="ColorA" Selector="Item1" />
+          <Property Name="ColorB" Selector="Item2" />
+          <Property Name="ColorG" Selector="Item3" />
+        </PropertyMappings>
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawCircle.bonsai">
         <Diameter>1</Diameter>
@@ -461,7 +457,7 @@
         <Combinator xsi:type="rx:Zip" />
       </Expression>
       <Expression xsi:type="rx:BehaviorSubject">
-        <Name>Stimulus</Name>
+        <Name>GrateSequence</Name>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
         <Name>StimNum</Name>
@@ -539,7 +535,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="p1:CreateDiscreteUniform">
           <p1:Lower>0</p1:Lower>
-          <p1:Upper>1</p1:Upper>
+          <p1:Upper>2</p1:Upper>
         </Combinator>
       </Expression>
       <Expression xsi:type="Combinator">
@@ -589,6 +585,40 @@
       </Expression>
       <Expression xsi:type="MulticastSubject">
         <Name>StimID</Name>
+      </Expression>
+      <Expression xsi:type="rx:Condition">
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="WorkflowInput">
+              <Name>Source1</Name>
+            </Expression>
+            <Expression xsi:type="GreaterThan">
+              <Operand xsi:type="IntProperty">
+                <Value>0</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+          </Edges>
+        </Workflow>
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Expression>0.9</scr:Expression>
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Expression>1</scr:Expression>
+      </Expression>
+      <Expression xsi:type="scr:ExpressionTransform">
+        <scr:Expression>0.8</scr:Expression>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Zip" />
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>IncorrectCircle</Name>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="SubscribeSubject">
@@ -699,12 +729,20 @@
       <Edge From="81" To="82" Label="Source2" />
       <Edge From="82" To="83" Label="Source1" />
       <Edge From="84" To="85" Label="Source1" />
+      <Edge From="84" To="91" Label="Source1" />
       <Edge From="85" To="86" Label="Source1" />
       <Edge From="86" To="87" Label="Source1" />
       <Edge From="87" To="88" Label="Source2" />
       <Edge From="88" To="89" Label="Source1" />
       <Edge From="88" To="90" Label="Source1" />
       <Edge From="91" To="92" Label="Source1" />
+      <Edge From="91" To="93" Label="Source1" />
+      <Edge From="91" To="94" Label="Source1" />
+      <Edge From="92" To="95" Label="Source1" />
+      <Edge From="93" To="95" Label="Source2" />
+      <Edge From="94" To="95" Label="Source3" />
+      <Edge From="95" To="96" Label="Source1" />
+      <Edge From="97" To="98" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
