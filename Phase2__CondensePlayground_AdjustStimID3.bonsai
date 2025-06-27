@@ -153,10 +153,10 @@
         <Layer>0</Layer>
         <ExtentX>1.5</ExtentX>
         <ExtentY>1.5</ExtentY>
-        <SpatialFrequency>3</SpatialFrequency>
+        <SpatialFrequency>2</SpatialFrequency>
         <TemporalFrequency>1</TemporalFrequency>
         <Phase>0</Phase>
-        <Angle>90</Angle>
+        <Angle>45</Angle>
         <SquareWave>false</SquareWave>
         <Contrast>1</Contrast>
         <DutyCycle xsi:nil="true" />
@@ -371,7 +371,7 @@
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawCircle.bonsai">
         <Diameter>1</Diameter>
         <LocationX>0.3</LocationX>
-        <LocationY>0.3</LocationY>
+        <LocationY>-0.3</LocationY>
         <Layer>0</Layer>
         <ColorR>0</ColorR>
         <ColorG>0.8</ColorG>
@@ -859,13 +859,13 @@
             <Edge From="1" To="10" Label="Source1" />
             <Edge From="2" To="9" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="3" To="13" Label="Source1" />
+            <Edge From="3" To="11" Label="Source1" />
             <Edge From="4" To="9" Label="Source2" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="5" To="11" Label="Source1" />
+            <Edge From="5" To="12" Label="Source1" />
             <Edge From="6" To="9" Label="Source3" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="7" To="12" Label="Source1" />
+            <Edge From="7" To="13" Label="Source1" />
             <Edge From="8" To="9" Label="Source4" />
             <Edge From="9" To="15" Label="Source1" />
             <Edge From="10" To="14" Label="Source1" />
@@ -893,7 +893,7 @@
       </Expression>
       <Expression xsi:type="Add">
         <Operand xsi:type="IntProperty">
-          <Value>3</Value>
+          <Value>1</Value>
         </Operand>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -915,7 +915,7 @@
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>3</Value>
+                <Value>8</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -951,7 +951,7 @@
             </Expression>
             <Expression xsi:type="GreaterThanOrEqual">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>0</Value>
+                <Value>5</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -979,7 +979,7 @@
             </Expression>
             <Expression xsi:type="LessThanOrEqual">
               <Operand xsi:type="IntProperty">
-                <Value>3</Value>
+                <Value>8</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1177,8 +1177,8 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:CreateDiscreteUniform">
-                <p1:Lower>0</p1:Lower>
-                <p1:Upper>3</p1:Upper>
+                <p1:Lower>5</p1:Lower>
+                <p1:Upper>8</p1:Upper>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
