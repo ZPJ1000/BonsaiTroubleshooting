@@ -153,10 +153,10 @@
         <Layer>0</Layer>
         <ExtentX>1.5</ExtentX>
         <ExtentY>1.5</ExtentY>
-        <SpatialFrequency>2</SpatialFrequency>
+        <SpatialFrequency>3</SpatialFrequency>
         <TemporalFrequency>1</TemporalFrequency>
         <Phase>0</Phase>
-        <Angle>45</Angle>
+        <Angle>90</Angle>
         <SquareWave>false</SquareWave>
         <Contrast>1</Contrast>
         <DutyCycle xsi:nil="true" />
@@ -961,7 +961,7 @@
       </Expression>
       <Expression xsi:type="Add">
         <Operand xsi:type="IntProperty">
-          <Value>6</Value>
+          <Value>3</Value>
         </Operand>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -983,7 +983,7 @@
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>8</Value>
+                <Value>3</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1019,7 +1019,7 @@
             </Expression>
             <Expression xsi:type="GreaterThanOrEqual">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>5</Value>
+                <Value>0</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1047,7 +1047,7 @@
             </Expression>
             <Expression xsi:type="LessThanOrEqual">
               <Operand xsi:type="IntProperty">
-                <Value>8</Value>
+                <Value>3</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1245,8 +1245,8 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:CreateDiscreteUniform">
-                <p1:Lower>5</p1:Lower>
-                <p1:Upper>8</p1:Upper>
+                <p1:Lower>0</p1:Lower>
+                <p1:Upper>3</p1:Upper>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
