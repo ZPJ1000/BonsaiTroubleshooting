@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.9.0"
+<WorkflowBuilder Version="2.8.5"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
@@ -60,57 +60,6 @@
       <Expression xsi:type="rx:PublishSubject">
         <Name>Draw</Name>
       </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="num:CreateRandom">
-          <num:Seed xsi:nil="true" />
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Value" DisplayName="StimIDMinFirstTrial" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="Int64Property">
-          <Value>0</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="ExternalizedMapping">
-        <Property Name="Value" DisplayName="StimIDMaxFirstTrial" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="Int64Property">
-          <Value>3</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Zip" />
-      </Expression>
-      <Expression xsi:type="PropertyMapping">
-        <PropertyMappings>
-          <Property Name="Lower" Selector="Item1" />
-          <Property Name="Upper" Selector="Item2" />
-        </PropertyMappings>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:CreateDiscreteUniform">
-          <p1:Lower>0</p1:Lower>
-          <p1:Upper>3</p1:Upper>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="p1:Sample" />
-      </Expression>
-      <Expression xsi:type="rx:BehaviorSubject">
-        <Name>StartStim</Name>
-      </Expression>
-      <Expression xsi:type="rx:BehaviorSubject">
-        <Name>StimID</Name>
-      </Expression>
-      <Expression xsi:type="rx:BehaviorSubject">
-        <Name>MaxStimID</Name>
-      </Expression>
-      <Expression xsi:type="rx:BehaviorSubject">
-        <Name>MinStimID</Name>
-      </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>Initialize Subjects</Name>
         <Workflow>
@@ -139,11 +88,74 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>TrialRandomization</Name>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="num:CreateRandom">
+                <num:Seed xsi:nil="true" />
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="StimIDMinFirstTrial" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="Int64Property">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="StimIDMaxFirstTrial" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="Int64Property">
+                <Value>3</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Lower" Selector="Item1" />
+                <Property Name="Upper" Selector="Item2" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:CreateDiscreteUniform">
+                <p1:Lower>0</p1:Lower>
+                <p1:Upper>3</p1:Upper>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="p1:Sample" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>StartStim</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>StimID</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>MaxStimID</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>MinStimID</Name>
+            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
             <Edge From="4" To="5" Label="Source1" />
+            <Edge From="6" To="13" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="11" Label="Source1" />
+            <Edge From="8" To="18" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source2" />
+            <Edge From="10" To="17" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source2" />
+            <Edge From="13" To="14" Label="Source2" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="14" To="16" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -705,7 +717,7 @@
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="IntProperty">
-                <Value>8</Value>
+                <Value>3</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -818,7 +830,6 @@
             <Edge From="4" To="5" Label="Source1" />
             <Edge From="6" To="7" Label="Source1" />
             <Edge From="6" To="12" Label="Source1" />
-            <Edge From="6" To="21" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
             <Edge From="7" To="10" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
@@ -830,6 +841,7 @@
             <Edge From="17" To="19" Label="Source1" />
             <Edge From="18" To="19" Label="Source2" />
             <Edge From="19" To="20" Label="Source1" />
+            <Edge From="19" To="21" Label="Source2" />
             <Edge From="20" To="21" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
             <Edge From="21" To="23" Label="Source1" />
@@ -910,8 +922,8 @@
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawCircle.bonsai">
               <Diameter>1</Diameter>
-              <LocationX>0.3</LocationX>
-              <LocationY>-0.3</LocationY>
+              <LocationX>-0.3</LocationX>
+              <LocationY>0.3</LocationY>
               <Layer>0</Layer>
               <ColorR>0</ColorR>
               <ColorG>0.8</ColorG>
@@ -974,10 +986,10 @@
               <Layer>0</Layer>
               <ExtentX>1.5</ExtentX>
               <ExtentY>1.5</ExtentY>
-              <SpatialFrequency>2</SpatialFrequency>
+              <SpatialFrequency>3</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>45</Angle>
+              <Angle>90</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -1155,18 +1167,6 @@
       <Edge From="2" To="3" Label="Source1" />
       <Edge From="4" To="5" Label="Source1" />
       <Edge From="5" To="6" Label="Source1" />
-      <Edge From="7" To="14" Label="Source1" />
-      <Edge From="8" To="9" Label="Source1" />
-      <Edge From="9" To="12" Label="Source1" />
-      <Edge From="9" To="19" Label="Source1" />
-      <Edge From="10" To="11" Label="Source1" />
-      <Edge From="11" To="12" Label="Source2" />
-      <Edge From="11" To="18" Label="Source1" />
-      <Edge From="12" To="13" Label="Source1" />
-      <Edge From="13" To="14" Label="Source2" />
-      <Edge From="14" To="15" Label="Source2" />
-      <Edge From="15" To="16" Label="Source1" />
-      <Edge From="15" To="17" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
