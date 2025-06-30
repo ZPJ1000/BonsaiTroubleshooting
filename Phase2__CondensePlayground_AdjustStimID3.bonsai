@@ -153,10 +153,10 @@
         <Layer>0</Layer>
         <ExtentX>1.5</ExtentX>
         <ExtentY>1.5</ExtentY>
-        <SpatialFrequency>1</SpatialFrequency>
+        <SpatialFrequency>2</SpatialFrequency>
         <TemporalFrequency>1</TemporalFrequency>
         <Phase>0</Phase>
-        <Angle>0</Angle>
+        <Angle>45</Angle>
         <SquareWave>false</SquareWave>
         <Contrast>1</Contrast>
         <DutyCycle xsi:nil="true" />
@@ -404,8 +404,8 @@
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawCircle.bonsai">
         <Diameter>1</Diameter>
-        <LocationX>0.3</LocationX>
-        <LocationY>-0.3</LocationY>
+        <LocationX>-0.75</LocationX>
+        <LocationY>0.75</LocationY>
         <Layer>0</Layer>
         <ColorR>0</ColorR>
         <ColorG>0.8</ColorG>
@@ -731,17 +731,17 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
+                <Value>2</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
                 <Value>3</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
                 <Value>4</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>2</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -761,13 +761,13 @@
             <Edge From="1" To="11" Label="Source1" />
             <Edge From="2" To="9" Label="Source1" />
             <Edge From="3" To="4" Label="Source1" />
-            <Edge From="3" To="14" Label="Source1" />
+            <Edge From="3" To="12" Label="Source1" />
             <Edge From="4" To="9" Label="Source2" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="5" To="12" Label="Source1" />
+            <Edge From="5" To="13" Label="Source1" />
             <Edge From="6" To="9" Label="Source3" />
             <Edge From="7" To="8" Label="Source1" />
-            <Edge From="7" To="13" Label="Source1" />
+            <Edge From="7" To="14" Label="Source1" />
             <Edge From="8" To="9" Label="Source4" />
             <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="16" Label="Source1" />
@@ -961,7 +961,7 @@
       </Expression>
       <Expression xsi:type="Add">
         <Operand xsi:type="IntProperty">
-          <Value>8</Value>
+          <Value>6</Value>
         </Operand>
       </Expression>
       <Expression xsi:type="SubscribeSubject">
@@ -983,7 +983,7 @@
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>3</Value>
+                <Value>8</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1019,7 +1019,7 @@
             </Expression>
             <Expression xsi:type="GreaterThanOrEqual">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>0</Value>
+                <Value>5</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1047,7 +1047,7 @@
             </Expression>
             <Expression xsi:type="LessThanOrEqual">
               <Operand xsi:type="IntProperty">
-                <Value>3</Value>
+                <Value>8</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
@@ -1245,8 +1245,8 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="p1:CreateDiscreteUniform">
-                <p1:Lower>0</p1:Lower>
-                <p1:Upper>3</p1:Upper>
+                <p1:Lower>5</p1:Lower>
+                <p1:Upper>8</p1:Upper>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -1363,7 +1363,6 @@
       <Edge From="97" To="98" Label="Source1" />
       <Edge From="99" To="100" Label="Source1" />
       <Edge From="99" To="105" Label="Source1" />
-      <Edge From="99" To="114" Label="Source2" />
       <Edge From="100" To="101" Label="Source1" />
       <Edge From="100" To="103" Label="Source1" />
       <Edge From="101" To="102" Label="Source1" />
@@ -1375,6 +1374,7 @@
       <Edge From="110" To="112" Label="Source1" />
       <Edge From="111" To="112" Label="Source2" />
       <Edge From="112" To="113" Label="Source1" />
+      <Edge From="112" To="114" Label="Source2" />
       <Edge From="113" To="114" Label="Source1" />
       <Edge From="114" To="115" Label="Source1" />
       <Edge From="114" To="116" Label="Source1" />

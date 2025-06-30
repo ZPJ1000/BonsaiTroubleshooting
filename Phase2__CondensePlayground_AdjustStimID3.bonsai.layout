@@ -1288,7 +1288,7 @@
       <TimeSeriesVisualizer>
         <Capacity>640</Capacity>
         <Min>0</Min>
-        <Max>8</Max>
+        <Max>9</Max>
         <AutoScale>true</AutoScale>
       </TimeSeriesVisualizer>
     </VisualizerSettings>
@@ -1544,8 +1544,8 @@
   <DialogSettings>
     <Visible>true</Visible>
     <Location>
-      <X>-952</X>
-      <Y>949</Y>
+      <X>-1205</X>
+      <Y>936</Y>
     </Location>
     <Size>
       <Width>336</Width>
@@ -1560,8 +1560,8 @@
   <DialogSettings>
     <Visible>true</Visible>
     <Location>
-      <X>-950</X>
-      <Y>1031</Y>
+      <X>-1216</X>
+      <Y>1060</Y>
     </Location>
     <Size>
       <Width>336</Width>
@@ -1588,8 +1588,8 @@
   <DialogSettings>
     <Visible>true</Visible>
     <Location>
-      <X>-707</X>
-      <Y>878</Y>
+      <X>-796</X>
+      <Y>905</Y>
     </Location>
     <Size>
       <Width>336</Width>
@@ -1602,7 +1602,7 @@
     </VisualizerSettings>
   </DialogSettings>
   <DialogSettings xsi:type="WorkflowEditorSettings">
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     <Location>
       <X>244</X>
       <Y>404</Y>
@@ -1612,6 +1612,15 @@
       <Height>279</Height>
     </Size>
     <WindowState>Normal</WindowState>
+    <VisualizerTypeName>Bonsai.Design.Visualizers.TimeSeriesVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <TimeSeriesVisualizer>
+        <Capacity>640</Capacity>
+        <Min>0</Min>
+        <Max>9</Max>
+        <AutoScale>true</AutoScale>
+      </TimeSeriesVisualizer>
+    </VisualizerSettings>
     <EditorDialogSettings>
       <Visible>false</Visible>
       <Location>
@@ -1626,16 +1635,20 @@
     </EditorDialogSettings>
   </DialogSettings>
   <DialogSettings>
-    <Visible>false</Visible>
+    <Visible>true</Visible>
     <Location>
-      <X>-1894</X>
-      <Y>26</Y>
+      <X>-1738</X>
+      <Y>182</Y>
     </Location>
     <Size>
       <Width>336</Width>
       <Height>65</Height>
     </Size>
     <WindowState>Normal</WindowState>
+    <VisualizerTypeName>Bonsai.Design.ObjectTextVisualizer</VisualizerTypeName>
+    <VisualizerSettings>
+      <ObjectTextVisualizer />
+    </VisualizerSettings>
   </DialogSettings>
   <DialogSettings>
     <Visible>false</Visible>
