@@ -397,8 +397,8 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:CreateDiscreteUniform">
-                      <p1:Lower>0</p1:Lower>
-                      <p1:Upper>3</p1:Upper>
+                      <p1:Lower>5</p1:Lower>
+                      <p1:Upper>8</p1:Upper>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -972,7 +972,7 @@
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="IntProperty">
-                <Value>1</Value>
+                <Value>6</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
@@ -994,7 +994,7 @@
                   </Expression>
                   <Expression xsi:type="GreaterThan">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>3</Value>
+                      <Value>8</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1030,7 +1030,7 @@
                   </Expression>
                   <Expression xsi:type="GreaterThanOrEqual">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>0</Value>
+                      <Value>5</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1058,7 +1058,7 @@
                   </Expression>
                   <Expression xsi:type="LessThanOrEqual">
                     <Operand xsi:type="IntProperty">
-                      <Value>3</Value>
+                      <Value>8</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1161,7 +1161,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>false</Value>
+                      <Value>true</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1221,7 +1221,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
+                      <Value>false</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -1248,10 +1248,10 @@
               <Layer>0</Layer>
               <ExtentX>1.5</ExtentX>
               <ExtentY>1.5</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
+              <SpatialFrequency>3</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>0</Angle>
+              <Angle>90</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -1315,10 +1315,10 @@
               <Layer>0</Layer>
               <ExtentX>1.5</ExtentX>
               <ExtentY>1.5</ExtentY>
-              <SpatialFrequency>7</SpatialFrequency>
+              <SpatialFrequency>6</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>170</Angle>
+              <Angle>40</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
