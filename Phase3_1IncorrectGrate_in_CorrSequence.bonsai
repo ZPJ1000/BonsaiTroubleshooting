@@ -86,7 +86,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="Int64Property">
-                <Value>1</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -98,7 +98,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="Int64Property">
-                <Value>0</Value>
+                <Value>1</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -314,9 +314,9 @@
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="Value of Trial Randomization = Incorrect" />
             </Expression>
-            <Expression xsi:type="LessThan">
+            <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>1</Value>
+                <Value>0</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -335,7 +335,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>false</Value>
+                      <Value>true</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -365,7 +365,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
+                <Value>1</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -811,9 +811,9 @@
             <Expression xsi:type="SubscribeSubject">
               <Name>TrialRandomization</Name>
             </Expression>
-            <Expression xsi:type="LessThan">
+            <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>1</Value>
+                <Value>0</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -835,7 +835,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>false</Value>
+                      <Value>true</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -857,7 +857,7 @@
             </Expression>
             <Expression xsi:type="Equal">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>0</Value>
+                <Value>1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -900,7 +900,7 @@
             </Expression>
             <Expression xsi:type="NotEqual">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>0</Value>
+                <Value>1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -952,7 +952,7 @@
                   </Expression>
                   <Expression xsi:type="Add">
                     <Operand xsi:type="IntProperty">
-                      <Value>2</Value>
+                      <Value>3</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Annotation">
@@ -1182,7 +1182,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>45</Angle>
+              <Angle>135</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
