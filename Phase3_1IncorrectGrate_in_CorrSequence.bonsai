@@ -98,7 +98,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="Int64Property">
-                <Value>1</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -295,29 +295,21 @@
               <Name>To make a separate loop for Incorrect</Name>
               <Text><![CDATA[]]></Text>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="FloatProperty">
-                  <Value>0</Value>
-                </Combinator>
-              </Builder>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>0</Value>
+              </Combinator>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="MulticastSubject">
-                <Name>MinStimID</Name>
-              </Builder>
+            <Expression xsi:type="MulticastSubject">
+              <Name>MinStimID</Name>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="FloatProperty">
-                  <Value>3</Value>
-                </Combinator>
-              </Builder>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="FloatProperty">
+                <Value>3</Value>
+              </Combinator>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="MulticastSubject">
-                <Name>MaxStimID</Name>
-              </Builder>
+            <Expression xsi:type="MulticastSubject">
+              <Name>MaxStimID</Name>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
               <Property Name="Value" DisplayName="Value of Trial Randomization = Incorrect" />
@@ -343,7 +335,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
+                      <Value>false</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -373,7 +365,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="FloatProperty">
-                <Value>1</Value>
+                <Value>0</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -843,7 +835,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
+                      <Value>false</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -865,7 +857,7 @@
             </Expression>
             <Expression xsi:type="Equal">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>1</Value>
+                <Value>0</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -908,7 +900,7 @@
             </Expression>
             <Expression xsi:type="NotEqual">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>1</Value>
+                <Value>0</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -960,7 +952,7 @@
                   </Expression>
                   <Expression xsi:type="Add">
                     <Operand xsi:type="IntProperty">
-                      <Value>1</Value>
+                      <Value>2</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Annotation">
@@ -1190,7 +1182,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>135</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />

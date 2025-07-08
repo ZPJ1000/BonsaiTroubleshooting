@@ -104,8 +104,8 @@
         <Y>3</Y>
       </Location>
       <Size>
-        <Width>1464</Width>
-        <Height>1039</Height>
+        <Width>1506</Width>
+        <Height>1023</Height>
       </Size>
       <WindowState>Normal</WindowState>
     </EditorDialogSettings>
@@ -478,8 +478,8 @@
         <Y>3</Y>
       </Location>
       <Size>
-        <Width>1542</Width>
-        <Height>1039</Height>
+        <Width>1506</Width>
+        <Height>1023</Height>
       </Size>
       <WindowState>Normal</WindowState>
     </EditorDialogSettings>
@@ -500,7 +500,7 @@
           <TimeSeriesVisualizer>
             <Capacity>640</Capacity>
             <Min>0</Min>
-            <Max>7</Max>
+            <Max>9</Max>
             <AutoScale>true</AutoScale>
           </TimeSeriesVisualizer>
         </VisualizerSettings>
@@ -1004,16 +1004,25 @@
         <WindowState>Normal</WindowState>
       </DialogSettings>
       <DialogSettings>
-        <Visible>false</Visible>
+        <Visible>true</Visible>
         <Location>
-          <X>0</X>
-          <Y>0</Y>
+          <X>-474</X>
+          <Y>403</Y>
         </Location>
         <Size>
-          <Width>0</Width>
-          <Height>0</Height>
+          <Width>416</Width>
+          <Height>279</Height>
         </Size>
         <WindowState>Normal</WindowState>
+        <VisualizerTypeName>Bonsai.Design.Visualizers.TimeSeriesVisualizer</VisualizerTypeName>
+        <VisualizerSettings>
+          <TimeSeriesVisualizer>
+            <Capacity>640</Capacity>
+            <Min>0</Min>
+            <Max>3.5</Max>
+            <AutoScale>true</AutoScale>
+          </TimeSeriesVisualizer>
+        </VisualizerSettings>
       </DialogSettings>
       <DialogSettings>
         <Visible>false</Visible>
@@ -1655,8 +1664,8 @@
         <Y>3</Y>
       </Location>
       <Size>
-        <Width>1464</Width>
-        <Height>1039</Height>
+        <Width>1506</Width>
+        <Height>1023</Height>
       </Size>
       <WindowState>Normal</WindowState>
     </EditorDialogSettings>
