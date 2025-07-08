@@ -295,21 +295,29 @@
               <Name>To make a separate loop for Incorrect</Name>
               <Text><![CDATA[]]></Text>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>0</Value>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="FloatProperty">
+                  <Value>0</Value>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>MinStimID</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MulticastSubject">
+                <Name>MinStimID</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="FloatProperty">
-                <Value>3</Value>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="FloatProperty">
+                  <Value>3</Value>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>MaxStimID</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MulticastSubject">
+                <Name>MaxStimID</Name>
+              </Builder>
             </Expression>
             <Expression xsi:type="LessThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
@@ -842,7 +850,7 @@
             </Expression>
             <Expression xsi:type="Add">
               <Operand xsi:type="IntProperty">
-                <Value>0</Value>
+                <Value>1</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="Annotation">
@@ -1127,6 +1135,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="5" To="20" Label="Source1" />
             <Edge From="5" To="22" Label="Source1" />
             <Edge From="5" To="24" Label="Source1" />
+            <Edge From="5" To="31" Label="Source2" />
             <Edge From="6" To="7" Label="Source2" />
             <Edge From="6" To="9" Label="Source2" />
             <Edge From="7" To="8" Label="Source1" />
@@ -1147,7 +1156,6 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="27" To="29" Label="Source1" />
             <Edge From="28" To="29" Label="Source2" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="29" To="31" Label="Source2" />
             <Edge From="30" To="31" Label="Source1" />
             <Edge From="31" To="32" Label="Source1" />
             <Edge From="31" To="33" Label="Source1" />
@@ -1223,10 +1231,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1.5</ExtentX>
               <ExtentY>1.5</ExtentY>
-              <SpatialFrequency>6</SpatialFrequency>
+              <SpatialFrequency>0</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>80</Angle>
+              <Angle>30</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
