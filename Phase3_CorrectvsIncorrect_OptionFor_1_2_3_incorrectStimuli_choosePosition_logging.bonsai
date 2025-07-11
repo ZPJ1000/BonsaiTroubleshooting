@@ -8,8 +8,8 @@
                  xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:gli="clr-namespace:Bonsai.Shaders.Input;assembly=Bonsai.Shaders"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -505,6 +505,10 @@
             <Expression xsi:type="MulticastSubject">
               <Name>StartStim</Name>
             </Expression>
+            <Expression xsi:type="Annotation">
+              <Name>Don't need this anymore</Name>
+              <Text><![CDATA[Now I add only StimNum (0,1,2 for 3 element sequence) to the StartStim, so I shouldn't have to reset the StimID at end of trial ]]></Text>
+            </Expression>
             <Expression xsi:type="MulticastSubject">
               <Name>StimID</Name>
             </Expression>
@@ -708,7 +712,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>30</Value>
+                      <Value>0</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -732,7 +736,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>60</Value>
+                      <Value>45</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -756,7 +760,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>40</Value>
+                      <Value>90</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -781,7 +785,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>80</Value>
+                      <Value>135</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -792,22 +796,22 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>4</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>6</Value>
+                      <Value>4</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>4</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>6</Value>
+                      <Value>4</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -915,7 +919,7 @@
                   </Expression>
                   <Expression xsi:type="Add">
                     <Operand xsi:type="IntProperty">
-                      <Value>2</Value>
+                      <Value>3</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Annotation">
@@ -1199,7 +1203,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1313,7 +1317,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1457,11 +1461,12 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="34" To="36" Label="Source1" />
             <Edge From="35" To="36" Label="Source3" />
             <Edge From="36" To="37" Label="Source1" />
-            <Edge From="36" To="38" Label="Source1" />
-            <Edge From="39" To="40" Label="Source1" />
-            <Edge From="39" To="42" Label="Source1" />
+            <Edge From="36" To="39" Label="Source1" />
+            <Edge From="38" To="39" Label="Source2" />
             <Edge From="40" To="41" Label="Source1" />
-            <Edge From="42" To="43" Label="Source1" />
+            <Edge From="40" To="43" Label="Source1" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="43" To="44" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -1487,10 +1492,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1.5</ExtentX>
               <ExtentY>1.5</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
+              <SpatialFrequency>4</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>0</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -1738,51 +1743,20 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
         <Name>Log Data</Name>
         <Workflow>
           <Nodes>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>TrialNum</Name>
-              </Builder>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>WriteStimNum</Name>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>TrialRandomization</Name>
-              </Builder>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StimID</Name>
             </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:Zip" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="rx:ToDictionary" />
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>TrialNum</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>WriteStimID</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:CombineLatest" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="io:CsvWriter">
-                <io:FileName>TrialType.csv</io:FileName>
-                <io:Delimiter>;</io:Delimiter>
-                <io:Append>true</io:Append>
-                <io:Overwrite>false</io:Overwrite>
-                <io:Suffix>None</io:Suffix>
-                <io:IncludeHeader>false</io:IncludeHeader>
-              </Builder>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TrialNum</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Timestamp" />
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TrialRandomization</Name>
@@ -1790,20 +1764,29 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:Zip" />
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>StimID</Name>
-            </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:CombineLatest" />
+              <Combinator xsi:type="rx:WithLatestFrom" />
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:Skip">
+                  <rx:Count>1</rx:Count>
+                </Combinator>
+              </Builder>
             </Expression>
             <Expression xsi:type="MemberSelector">
               <Selector>Item1,Item2</Selector>
             </Expression>
             <Expression xsi:type="scr:ExpressionTransform">
               <scr:Expression>new(
-it.Item1.Item1 as TrialNum,
-it.Item1.Item2 as TrialType,
-it.Item2 as StimulusElement)</scr:Expression>
+it.Item1.Item1 as StimulusNumber,
+it.Item1.Item2 as StimulusElement,
+it.Item2.Item1 as TrialNum,
+it.Item2.Item2 as TrialType)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Annotation">
+              <Name>check alignment stim Num and stim element</Name>
+              <Text><![CDATA[]]></Text>
             </Expression>
             <Expression xsi:type="io:CsvWriter">
               <io:FileName>metaData.csv</io:FileName>
@@ -1817,17 +1800,16 @@ it.Item2 as StimulusElement)</scr:Expression>
           <Edges>
             <Edge From="0" To="2" Label="Source1" />
             <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="2" To="7" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
             <Edge From="4" To="6" Label="Source1" />
             <Edge From="5" To="6" Label="Source2" />
-            <Edge From="6" To="7" Label="Source1" />
-            <Edge From="8" To="10" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
+            <Edge From="6" To="7" Label="Source2" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
             <Edge From="10" To="12" Label="Source1" />
             <Edge From="11" To="12" Label="Source2" />
-            <Edge From="12" To="13" Label="Source1" />
-            <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="15" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
