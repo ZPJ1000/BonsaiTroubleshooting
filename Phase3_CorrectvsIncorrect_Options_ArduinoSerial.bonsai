@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<WorkflowBuilder Version="2.8.1"
+<WorkflowBuilder Version="2.8.5"
                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
@@ -8,8 +8,8 @@
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
-                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -58,8 +58,8 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="port:CreateSerialPort">
           <port:Name>Task</port:Name>
-          <port:PortName>COM4</port:PortName>
-          <port:BaudRate>115200</port:BaudRate>
+          <port:PortName>COM3</port:PortName>
+          <port:BaudRate>9600</port:BaudRate>
           <port:NewLine>\r\n</port:NewLine>
           <port:Parity>None</port:Parity>
           <port:ParityReplace>63</port:ParityReplace>
@@ -74,6 +74,9 @@
           <port:ReceivedBytesThreshold>1</port:ReceivedBytesThreshold>
         </Combinator>
       </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="gl:RenderFrame" />
+      </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
           <Left>-180</Left>
@@ -81,9 +84,6 @@
           <Bottom>-90</Bottom>
           <Top>90</Top>
         </Builder>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="gl:RenderFrame" />
       </Expression>
       <Expression xsi:type="IncludeWorkflow" Path="BonVision:Environment.NormalizedView.bonsai" />
       <Expression xsi:type="rx:PublishSubject">
@@ -197,7 +197,7 @@
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="StringProperty">
-                <Value>N</Value>
+                <Value>G</Value>
               </Combinator>
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
@@ -334,13 +334,17 @@
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>TaskOut</Name>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="BooleanProperty">
+                  <Value>false</Value>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>Ready</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:BehaviorSubject">
+                <Name>Ready</Name>
+              </Builder>
             </Expression>
           </Nodes>
           <Edges>
@@ -601,6 +605,88 @@
             </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>HowManyIncorrectStimuli</Name>
+            </Expression>
+            <Expression xsi:type="LessThan">
+              <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
+                <Value>1</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>false</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>G</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Trialtype</Name>
+            </Expression>
+            <Expression xsi:type="GreaterThan">
+              <Operand xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>N</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>Trialtype</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>MinStimID</Name>
@@ -1074,7 +1160,7 @@
                   </Expression>
                   <Expression xsi:type="Add">
                     <Operand xsi:type="IntProperty">
-                      <Value>1</Value>
+                      <Value>3</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Annotation">
@@ -1241,7 +1327,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1282,7 +1368,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1320,7 +1406,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1396,7 +1482,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1434,7 +1520,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1472,7 +1558,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1592,6 +1678,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="8" To="17" Label="Source1" />
             <Edge From="8" To="24" Label="Source1" />
             <Edge From="8" To="26" Label="Source1" />
+            <Edge From="8" To="29" Label="Source1" />
+            <Edge From="8" To="31" Label="Source1" />
+            <Edge From="8" To="34" Label="Source1" />
+            <Edge From="8" To="36" Label="Source1" />
             <Edge From="9" To="10" Label="Source2" />
             <Edge From="9" To="12" Label="Source2" />
             <Edge From="10" To="11" Label="Source1" />
@@ -1608,91 +1698,101 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="24" To="25" Label="Source1" />
             <Edge From="26" To="27" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
-            <Edge From="29" To="31" Label="Source1" />
+            <Edge From="29" To="30" Label="Source1" />
             <Edge From="30" To="31" Label="Source2" />
             <Edge From="31" To="32" Label="Source1" />
-            <Edge From="31" To="34" Label="Source2" />
-            <Edge From="32" To="34" Label="Source1" />
-            <Edge From="33" To="34" Label="Source3" />
+            <Edge From="32" To="33" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
-            <Edge From="34" To="37" Label="Source1" />
-            <Edge From="36" To="37" Label="Source2" />
-            <Edge From="38" To="39" Label="Source1" />
-            <Edge From="38" To="41" Label="Source1" />
-            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="35" To="36" Label="Source2" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="39" To="41" Label="Source1" />
+            <Edge From="40" To="41" Label="Source2" />
             <Edge From="41" To="42" Label="Source1" />
+            <Edge From="41" To="44" Label="Source2" />
+            <Edge From="42" To="44" Label="Source1" />
+            <Edge From="43" To="44" Label="Source3" />
+            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="44" To="47" Label="Source1" />
+            <Edge From="46" To="47" Label="Source2" />
+            <Edge From="48" To="49" Label="Source1" />
+            <Edge From="48" To="51" Label="Source1" />
+            <Edge From="49" To="50" Label="Source1" />
+            <Edge From="51" To="52" Label="Source1" />
           </Edges>
         </Workflow>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>CheckSerial</Name>
+          <Description>Sends timed output to arduino to receive signal back when ready. Can be used to turmn off reading wheel etc</Description>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:Timer">
+                    <rx:DueTime>PT0S</rx:DueTime>
+                    <rx:Period>PT10S</rx:Period>
+                  </Combinator>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="StringProperty">
+                    <Value>Test</Value>
+                  </Combinator>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="port:SerialWriteLine">
+                    <port:PortName>Task</port:PortName>
+                    <port:NewLine>\r\n</port:NewLine>
+                  </Combinator>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="SubscribeSubject">
+                  <Name>FromTask</Name>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:TakeUntil" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="WorkflowOutput" />
+              </Expression>
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="1" Label="Source1" />
+              <Edge From="1" To="2" Label="Source1" />
+              <Edge From="2" To="4" Label="Source1" />
+              <Edge From="3" To="4" Label="Source2" />
+              <Edge From="4" To="5" Label="Source1" />
+            </Edges>
+          </Workflow>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="rx:Last" />
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="Combinator">
+          <Combinator xsi:type="BooleanProperty">
+            <Value>true</Value>
+          </Combinator>
+        </Builder>
+      </Expression>
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="MulticastSubject">
+          <Name>Ready</Name>
+        </Builder>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
-        <Name>CheckSerial</Name>
-        <Description>Sends timed output to arduino to receive signal back when ready. Can be used to turmn off reading wheel etc</Description>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Timer">
-                <rx:DueTime>PT0S</rx:DueTime>
-                <rx:Period>PT10S</rx:Period>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>Test</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="io:SerialStringWrite">
-                  <io:PortName>Task</io:PortName>
-                  <io:NewLine>\r\n</io:NewLine>
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="port:SerialWriteLine">
-                <port:PortName>Task</port:PortName>
-                <port:NewLine>\r\n</port:NewLine>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="io:SerialStringWrite">
-                  <io:PortName>Task</io:PortName>
-                  <io:NewLine>\r\n</io:NewLine>
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>FromTask</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:TakeUntil" />
-            </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="1" Label="Source1" />
-            <Edge From="1" To="2" Label="Source1" />
-            <Edge From="2" To="3" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="6" Label="Source1" />
-            <Edge From="5" To="6" Label="Source2" />
-            <Edge From="6" To="7" Label="Source1" />
-          </Edges>
-        </Workflow>
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="rx:Last" />
-      </Expression>
-      <Expression xsi:type="Combinator">
-        <Combinator xsi:type="BooleanProperty">
-          <Value>true</Value>
-        </Combinator>
-      </Expression>
-      <Expression xsi:type="MulticastSubject">
-        <Name>Ready</Name>
-      </Expression>
-      <Expression xsi:type="rx:SelectMany">
         <Name>TrialLogic</Name>
         <Workflow>
           <Nodes>
@@ -1714,10 +1814,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
+              <SpatialFrequency>4</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>90</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -1731,10 +1831,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
+              <SpatialFrequency>4</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>90</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -1748,10 +1848,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
+              <SpatialFrequency>4</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>90</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -1772,7 +1872,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT3S</gl:DueTime>
+                <gl:DueTime>PT2S</gl:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2214,6 +2314,9 @@ it.Item2.Item2 as TrialType)</scr:Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>TaskState</Name>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:DistinctUntilChanged" />
+            </Expression>
             <Expression xsi:type="rx:Condition">
               <Workflow>
                 <Nodes>
@@ -2269,10 +2372,10 @@ it.Item2.Item2 as TrialType)</scr:Expression>
               <Name>TaskOut</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
-              <Name>TrialRandomization</Name>
+              <Name>TaskOut</Name>
             </Expression>
-            <Expression xsi:type="LessThan">
-              <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
+            <Expression xsi:type="Equal">
+              <Operand xsi:type="IntProperty">
                 <Value>1</Value>
               </Operand>
             </Expression>
@@ -2304,56 +2407,56 @@ it.Item2.Item2 as TrialType)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>G</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>Trialtype</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>TaskOut</Name>
-            </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>Trialtype</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="rx:CombineLatest" />
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:DistinctUntilChanged" />
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:DistinctUntilChanged" />
+              </Builder>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>Ready</Name>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Item2</Selector>
             </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>Ready</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="2" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source2" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="PropertyMapping">
+                <PropertyMappings>
+                  <Property Name="Value" />
+                </PropertyMappings>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:Condition">
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="WorkflowInput">
+                      <Name>Source1</Name>
+                    </Expression>
+                    <Expression xsi:type="ExternalizedMapping">
+                      <Property Name="Value" />
+                    </Expression>
+                    <Expression xsi:type="Combinator">
+                      <Combinator xsi:type="BooleanProperty">
+                        <Value>false</Value>
+                      </Combinator>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="2" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source2" />
+                    <Edge From="2" To="3" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="port:SerialWriteLine">
@@ -2361,44 +2464,39 @@ it.Item2.Item2 as TrialType)</scr:Expression>
                 <port:NewLine>\n\r</port:NewLine>
               </Combinator>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="BooleanProperty">
+                  <Value>false</Value>
+                </Combinator>
+              </Builder>
             </Expression>
-            <Expression xsi:type="WorkflowOutput" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>N</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>Trialtype</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="WorkflowOutput" />
             </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
-            <Edge From="0" To="4" Label="Source1" />
-            <Edge From="0" To="10" Label="Source1" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="5" Label="Source1" />
             <Edge From="2" To="3" Label="Source1" />
-            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
             <Edge From="5" To="6" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="6" To="7" Label="Source1" />
             <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="11" To="12" Label="Source1" />
-            <Edge From="13" To="15" Label="Source1" />
-            <Edge From="14" To="15" Label="Source2" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="16" To="19" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source2" />
+            <Edge From="8" To="11" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="11" Label="Source2" />
+            <Edge From="11" To="13" Label="Source1" />
+            <Edge From="12" To="13" Label="Source2" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="18" Label="Source1" />
+            <Edge From="16" To="17" Label="Source1" />
+            <Edge From="17" To="18" Label="Source2" />
+            <Edge From="18" To="19" Label="Source1" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2421,40 +2519,50 @@ it.Item2.Item2 as TrialType)</scr:Expression>
                 <Value>false</Value>
               </Combinator>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>FromTask</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="SubscribeSubject">
+                <Name>FromTask</Name>
+              </Builder>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Length,it</Selector>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
+                <Selector>Length,it</Selector>
+              </Builder>
             </Expression>
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Item1</Selector>
-                  </Expression>
-                  <Expression xsi:type="Equal">
-                    <Operand xsi:type="IntProperty">
-                      <Value>3</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:Condition">
+                <Workflow>
+                  <Nodes>
+                    <Expression xsi:type="WorkflowInput">
+                      <Name>Source1</Name>
+                    </Expression>
+                    <Expression xsi:type="MemberSelector">
+                      <Selector>Item1</Selector>
+                    </Expression>
+                    <Expression xsi:type="Equal">
+                      <Operand xsi:type="IntProperty">
+                        <Value>3</Value>
+                      </Operand>
+                    </Expression>
+                    <Expression xsi:type="WorkflowOutput" />
+                  </Nodes>
+                  <Edges>
+                    <Edge From="0" To="1" Label="Source1" />
+                    <Edge From="1" To="2" Label="Source1" />
+                    <Edge From="2" To="3" Label="Source1" />
+                  </Edges>
+                </Workflow>
+              </Builder>
             </Expression>
-            <Expression xsi:type="MemberSelector">
-              <Selector>Item2</Selector>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="MemberSelector">
+                <Selector>Item2</Selector>
+              </Builder>
             </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>TaskFeedback</Name>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="rx:BehaviorSubject">
+                <Name>TaskFeedback</Name>
+              </Builder>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Combinator">
