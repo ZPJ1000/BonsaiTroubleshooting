@@ -4,12 +4,17 @@
                  xmlns:gl="clr-namespace:Bonsai.Shaders;assembly=Bonsai.Shaders"
                  xmlns:res="clr-namespace:Bonsai.Resources;assembly=Bonsai.System"
                  xmlns:port="clr-namespace:Bonsai.IO.Ports;assembly=Bonsai.System"
+                 xmlns:mx="clr-namespace:Bonsai.DAQmx;assembly=Bonsai.DAQmx"
                  xmlns:rx="clr-namespace:Bonsai.Reactive;assembly=Bonsai.Core"
                  xmlns:num="clr-namespace:Bonsai.Numerics;assembly=Bonsai.Numerics"
                  xmlns:p1="clr-namespace:Bonsai.Numerics.Distributions;assembly=Bonsai.Numerics"
                  xmlns:sys="clr-namespace:System;assembly=mscorlib"
                  xmlns:io="clr-namespace:Bonsai.IO;assembly=Bonsai.System"
                  xmlns:scr="clr-namespace:Bonsai.Scripting.Expressions;assembly=Bonsai.Scripting.Expressions"
+                 xmlns:pylon="clr-namespace:Bonsai.Pylon;assembly=Bonsai.Pylon"
+                 xmlns:cv="clr-namespace:Bonsai.Vision;assembly=Bonsai.Vision"
+                 xmlns:ffmpeg="clr-namespace:Bonsai.FFmpeg;assembly=Bonsai.FFmpeg"
+                 xmlns:wie="clr-namespace:Bonsai.Windows.Input;assembly=Bonsai.Windows.Input"
                  xmlns="https://bonsai-rx.org/2018/workflow">
   <Workflow>
     <Nodes>
@@ -73,6 +78,126 @@
           <port:WriteBufferSize>2048</port:WriteBufferSize>
           <port:ReceivedBytesThreshold>1</port:ReceivedBytesThreshold>
         </Combinator>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>DAQ</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="SampleRate" />
+              <Property Name="Channels" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="mx:AnalogInput">
+                <mx:SignalSource />
+                <mx:SampleRate>1000</mx:SampleRate>
+                <mx:ActiveEdge>Rising</mx:ActiveEdge>
+                <mx:SampleMode>ContinuousSamples</mx:SampleMode>
+                <mx:BufferSize>1000</mx:BufferSize>
+                <mx:SamplesPerChannel xsi:nil="true" />
+                <mx:Channels>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>StartFramePV</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai4</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>Solenoid(8)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai8</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>Solenoid(9)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai9</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>Cap(10)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai10</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>Cap(11)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai11</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>Tone(12)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai12</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>Servo(13)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai13</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>StrainG(6)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai6</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>StrainG(7)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai7</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>WheelEncoder(14)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai14</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                  <mx:AnalogInputChannelConfiguration>
+                    <mx:ChannelName>VideoFrames(15)</mx:ChannelName>
+                    <mx:MinimumValue>-10</mx:MinimumValue>
+                    <mx:MaximumValue>10</mx:MaximumValue>
+                    <mx:PhysicalChannel>Dev1/ai15</mx:PhysicalChannel>
+                    <mx:TerminalConfiguration>Nrse</mx:TerminalConfiguration>
+                    <mx:VoltageUnits>Volts</mx:VoltageUnits>
+                  </mx:AnalogInputChannelConfiguration>
+                </mx:Channels>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Daqdata</Name>
+            </Expression>
+            <Expression xsi:type="WorkflowOutput" />
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="2" To="3" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="Disable">
         <Builder xsi:type="IncludeWorkflow" Path="BonVision:Environment.OrthographicView.bonsai">
@@ -153,6 +278,28 @@
                 </Combinator>
               </Builder>
             </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>0</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>TaskOut</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="StringProperty">
+                <Value>N</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:CombineLatest" />
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>ToTask</Name>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Trialtype</Name>
+            </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Combinator">
                 <Combinator xsi:type="port:CreateSerialPort">
@@ -194,14 +341,6 @@
                   <port:ReceivedBytesThreshold>1</port:ReceivedBytesThreshold>
                 </Combinator>
               </Builder>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>N</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>Trialtype</Name>
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="Int64Property">
@@ -327,14 +466,6 @@
               <Name>TaskState</Name>
             </Expression>
             <Expression xsi:type="Combinator">
-              <Combinator xsi:type="IntProperty">
-                <Value>0</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>TaskOut</Name>
-            </Expression>
-            <Expression xsi:type="Combinator">
               <Combinator xsi:type="BooleanProperty">
                 <Value>false</Value>
               </Combinator>
@@ -344,34 +475,37 @@
             </Expression>
           </Nodes>
           <Edges>
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="5" To="6" Label="Source1" />
-            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="4" Label="Source1" />
+            <Edge From="3" To="4" Label="Source2" />
+            <Edge From="3" To="6" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
             <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="11" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="15" To="23" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
             <Edge From="16" To="17" Label="Source1" />
-            <Edge From="16" To="19" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="21" Label="Source1" />
-            <Edge From="18" To="28" Label="Source1" />
-            <Edge From="19" To="20" Label="Source1" />
-            <Edge From="20" To="21" Label="Source2" />
-            <Edge From="20" To="27" Label="Source1" />
+            <Edge From="19" To="27" Label="Source1" />
+            <Edge From="20" To="21" Label="Source1" />
+            <Edge From="20" To="23" Label="Source1" />
             <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="23" Label="Source2" />
-            <Edge From="23" To="24" Label="Source2" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="24" To="26" Label="Source1" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="32" Label="Source1" />
-            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="22" To="25" Label="Source1" />
+            <Edge From="22" To="32" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="24" To="31" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source2" />
+            <Edge From="27" To="28" Label="Source2" />
+            <Edge From="28" To="29" Label="Source1" />
+            <Edge From="28" To="30" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
+            <Edge From="35" To="36" Label="Source1" />
             <Edge From="36" To="37" Label="Source1" />
             <Edge From="38" To="39" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -1074,7 +1208,7 @@
                   </Expression>
                   <Expression xsi:type="Add">
                     <Operand xsi:type="IntProperty">
-                      <Value>1</Value>
+                      <Value>2</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Annotation">
@@ -1241,7 +1375,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1282,7 +1416,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1320,7 +1454,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1358,7 +1492,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1396,7 +1530,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1434,7 +1568,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1697,123 +1831,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
         <Workflow>
           <Nodes>
             <Expression xsi:type="SubscribeSubject">
-              <Name>Draw</Name>
-            </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>CorrectGrate</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Angle" Selector="Item1" />
-                <Property Name="SpatialFrequency" Selector="Item2" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawGratings.bonsai">
-              <LocationX>0</LocationX>
-              <LocationY>0.3</LocationY>
-              <Layer>0</Layer>
-              <ExtentX>1</ExtentX>
-              <ExtentY>1</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
-              <TemporalFrequency>1</TemporalFrequency>
-              <Phase>0</Phase>
-              <Angle>90</Angle>
-              <SquareWave>false</SquareWave>
-              <Contrast>1</Contrast>
-              <DutyCycle xsi:nil="true" />
-              <Radius>1</Radius>
-              <Aperture>0</Aperture>
-              <Opacity>1</Opacity>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawGratings.bonsai">
-              <LocationX>-1.1</LocationX>
-              <LocationY>0.3</LocationY>
-              <Layer>0</Layer>
-              <ExtentX>1</ExtentX>
-              <ExtentY>1</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
-              <TemporalFrequency>1</TemporalFrequency>
-              <Phase>0</Phase>
-              <Angle>90</Angle>
-              <SquareWave>false</SquareWave>
-              <Contrast>1</Contrast>
-              <DutyCycle xsi:nil="true" />
-              <Radius>1</Radius>
-              <Aperture>0</Aperture>
-              <Opacity>1</Opacity>
-            </Expression>
-            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawGratings.bonsai">
-              <LocationX>1.1</LocationX>
-              <LocationY>0.3</LocationY>
-              <Layer>0</Layer>
-              <ExtentX>1</ExtentX>
-              <ExtentY>1</ExtentY>
-              <SpatialFrequency>1</SpatialFrequency>
-              <TemporalFrequency>1</TemporalFrequency>
-              <Phase>0</Phase>
-              <Angle>90</Angle>
-              <SquareWave>false</SquareWave>
-              <Contrast>1</Contrast>
-              <DutyCycle xsi:nil="true" />
-              <Radius>1</Radius>
-              <Aperture>0</Aperture>
-              <Opacity>1</Opacity>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Merge" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT1S</gl:DueTime>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:SubscribeWhen" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT3S</gl:DueTime>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:TakeUntil" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Last" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Repeat" />
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:ElementIndex" />
-            </Expression>
-            <Expression xsi:type="rx:SelectMany">
-              <Name>UpdateStimNum</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="MemberSelector">
-                    <Selector>Index</Selector>
-                  </Expression>
-                  <Expression xsi:type="Add">
-                    <Operand xsi:type="IntProperty">
-                      <Value>1</Value>
-                    </Operand>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>StimNum</Name>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                </Edges>
-              </Workflow>
+              <Name>StimNum</Name>
             </Expression>
             <Expression xsi:type="SubscribeSubject">
               <Name>StimNumInTrial</Name>
@@ -1823,7 +1841,17 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                 <Property Name="Value" />
               </PropertyMappings>
             </Expression>
-            <Expression xsi:type="rx:TakeWhile">
+            <Expression xsi:type="LessThanOrEqual">
+              <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
+                <Value>2</Value>
+              </Operand>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
               <Workflow>
                 <Nodes>
                   <Expression xsi:type="WorkflowInput">
@@ -1832,10 +1860,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                   <Expression xsi:type="ExternalizedMapping">
                     <Property Name="Value" />
                   </Expression>
-                  <Expression xsi:type="LessThanOrEqual">
-                    <Operand xsi:type="IntProperty">
-                      <Value>2</Value>
-                    </Operand>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -1846,71 +1874,12 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="rx:Last" />
+            <Expression xsi:type="Annotation">
+              <Name>Actual Stim Num</Name>
+              <Text><![CDATA[This adjusts so that the counter that presents elements (which counts one more than the elements presented) only gives the stim num per element, excluding the last stim counter at end of sequence. ]]></Text>
             </Expression>
-            <Expression xsi:type="rx:SelectMany">
-              <Name>Response</Name>
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>TaskState</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Delay">
-                      <rx:DueTime>PT1S</rx:DueTime>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>false</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="MulticastSubject">
-                    <Name>TaskState</Name>
-                  </Expression>
-                  <Expression xsi:type="SubscribeSubject">
-                    <Name>FromTask</Name>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="rx:Timer">
-                        <rx:DueTime>PT6S</rx:DueTime>
-                        <rx:Period>PT0S</rx:Period>
-                      </Combinator>
-                    </Builder>
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="rx:Zip" />
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="1" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source1" />
-                  <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="4" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source1" />
-                  <Edge From="5" To="9" Label="Source1" />
-                  <Edge From="6" To="7" Label="Source1" />
-                  <Edge From="7" To="9" Label="Source2" />
-                  <Edge From="8" To="9" Label="Source3" />
-                  <Edge From="9" To="10" Label="Source1" />
-                </Edges>
-              </Workflow>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>WriteStimNum</Name>
             </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="SubscribeSubject">
@@ -1992,6 +1961,234 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                 </PropertyMappings>
               </Builder>
             </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Draw</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>CorrectGrate</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Angle" Selector="Item1" />
+                <Property Name="SpatialFrequency" Selector="Item2" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawGratings.bonsai">
+              <LocationX>0</LocationX>
+              <LocationY>0.3</LocationY>
+              <Layer>0</Layer>
+              <ExtentX>1</ExtentX>
+              <ExtentY>1</ExtentY>
+              <SpatialFrequency>1</SpatialFrequency>
+              <TemporalFrequency>1</TemporalFrequency>
+              <Phase>0</Phase>
+              <Angle>0</Angle>
+              <SquareWave>false</SquareWave>
+              <Contrast>1</Contrast>
+              <DutyCycle xsi:nil="true" />
+              <Radius>1</Radius>
+              <Aperture>0</Aperture>
+              <Opacity>1</Opacity>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawGratings.bonsai">
+              <LocationX>-1.1</LocationX>
+              <LocationY>0.3</LocationY>
+              <Layer>0</Layer>
+              <ExtentX>1</ExtentX>
+              <ExtentY>1</ExtentY>
+              <SpatialFrequency>1</SpatialFrequency>
+              <TemporalFrequency>1</TemporalFrequency>
+              <Phase>0</Phase>
+              <Angle>0</Angle>
+              <SquareWave>false</SquareWave>
+              <Contrast>1</Contrast>
+              <DutyCycle xsi:nil="true" />
+              <Radius>1</Radius>
+              <Aperture>0</Aperture>
+              <Opacity>1</Opacity>
+            </Expression>
+            <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawGratings.bonsai">
+              <LocationX>1.1</LocationX>
+              <LocationY>0.3</LocationY>
+              <Layer>0</Layer>
+              <ExtentX>1</ExtentX>
+              <ExtentY>1</ExtentY>
+              <SpatialFrequency>1</SpatialFrequency>
+              <TemporalFrequency>1</TemporalFrequency>
+              <Phase>0</Phase>
+              <Angle>0</Angle>
+              <SquareWave>false</SquareWave>
+              <Contrast>1</Contrast>
+              <DutyCycle xsi:nil="true" />
+              <Radius>1</Radius>
+              <Aperture>0</Aperture>
+              <Opacity>1</Opacity>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Merge" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:Timer">
+                <gl:DueTime>PT1S</gl:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:SubscribeWhen" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="gl:Timer">
+                <gl:DueTime>PT3S</gl:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:TakeUntil" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Last" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Repeat" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:ElementIndex" />
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Name>UpdateStimNum</Name>
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Index</Selector>
+                  </Expression>
+                  <Expression xsi:type="Add">
+                    <Operand xsi:type="IntProperty">
+                      <Value>1</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="MulticastSubject">
+                    <Name>StimNum</Name>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="rx:TakeWhile">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="LessThanOrEqual">
+                    <Operand xsi:type="IntProperty">
+                      <Value>2</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Last" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>true</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>TaskState</Name>
+            </Expression>
+            <Expression xsi:type="rx:SelectMany">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="SubscribeSubject">
+                    <Name>ToTask</Name>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:CombineLatest" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Item2</Selector>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Take">
+                      <rx:Count>1</rx:Count>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="port:SerialWriteLine">
+                      <port:PortName>Task</port:PortName>
+                      <port:NewLine>\n\r</port:NewLine>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
+                  <Edge From="5" To="6" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Delay">
+                <rx:DueTime>PT1S</rx:DueTime>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>false</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MulticastSubject">
+              <Name>TaskState</Name>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>FromTask</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="BooleanProperty">
+                <Value>true</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="rx:Timer">
+                  <rx:DueTime>PT6S</rx:DueTime>
+                  <rx:Period>PT0S</rx:Period>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Zip" />
+            </Expression>
             <Expression xsi:type="Disable">
               <Builder xsi:type="Combinator">
                 <Combinator xsi:type="rx:Delay">
@@ -2033,100 +2230,61 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="SubscribeSubject">
-              <Name>StimNum</Name>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="LessThanOrEqual">
-              <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>2</Value>
-              </Operand>
-            </Expression>
-            <Expression xsi:type="PropertyMapping">
-              <PropertyMappings>
-                <Property Name="Value" />
-              </PropertyMappings>
-            </Expression>
-            <Expression xsi:type="rx:Condition">
-              <Workflow>
-                <Nodes>
-                  <Expression xsi:type="WorkflowInput">
-                    <Name>Source1</Name>
-                  </Expression>
-                  <Expression xsi:type="ExternalizedMapping">
-                    <Property Name="Value" />
-                  </Expression>
-                  <Expression xsi:type="Combinator">
-                    <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
-                    </Combinator>
-                  </Expression>
-                  <Expression xsi:type="WorkflowOutput" />
-                </Nodes>
-                <Edges>
-                  <Edge From="0" To="2" Label="Source1" />
-                  <Edge From="1" To="2" Label="Source2" />
-                  <Edge From="2" To="3" Label="Source1" />
-                </Edges>
-              </Workflow>
-            </Expression>
-            <Expression xsi:type="Annotation">
-              <Name>Actual Stim Num</Name>
-              <Text><![CDATA[This adjusts so that the counter that presents elements (which counts one more than the elements presented) only gives the stim num per element, excluding the last stim counter at end of sequence. ]]></Text>
-            </Expression>
-            <Expression xsi:type="rx:BehaviorSubject">
-              <Name>WriteStimNum</Name>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="3" Label="Source1" />
-            <Edge From="0" To="4" Label="Source1" />
-            <Edge From="0" To="5" Label="Source1" />
+            <Edge From="0" To="5" Label="Source2" />
             <Edge From="1" To="2" Label="Source1" />
+            <Edge From="1" To="31" Label="Source1" />
             <Edge From="2" To="3" Label="Source2" />
-            <Edge From="2" To="4" Label="Source2" />
-            <Edge From="2" To="5" Label="Source2" />
-            <Edge From="3" To="6" Label="Source1" />
-            <Edge From="4" To="6" Label="Source2" />
-            <Edge From="5" To="6" Label="Source3" />
-            <Edge From="6" To="8" Label="Source1" />
-            <Edge From="7" To="8" Label="Source2" />
-            <Edge From="8" To="10" Label="Source1" />
-            <Edge From="9" To="10" Label="Source2" />
-            <Edge From="10" To="11" Label="Source1" />
+            <Edge From="3" To="4" Label="Source1" />
+            <Edge From="4" To="5" Label="Source1" />
+            <Edge From="5" To="7" Label="Source1" />
+            <Edge From="6" To="7" Label="Source2" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="8" To="11" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="10" To="13" Label="Source1" />
             <Edge From="11" To="12" Label="Source1" />
-            <Edge From="12" To="13" Label="Source1" />
+            <Edge From="12" To="13" Label="Source2" />
             <Edge From="13" To="14" Label="Source1" />
-            <Edge From="14" To="17" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="15" To="33" Label="Source1" />
-            <Edge From="16" To="17" Label="Source2" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="15" To="44" Label="Source1" />
+            <Edge From="16" To="19" Label="Source1" />
+            <Edge From="16" To="20" Label="Source1" />
+            <Edge From="16" To="21" Label="Source1" />
             <Edge From="17" To="18" Label="Source1" />
-            <Edge From="18" To="19" Label="Source1" />
-            <Edge From="19" To="28" Label="Source1" />
-            <Edge From="20" To="21" Label="Source1" />
-            <Edge From="20" To="23" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="22" To="25" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
-            <Edge From="24" To="25" Label="Source2" />
-            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="18" To="19" Label="Source2" />
+            <Edge From="18" To="20" Label="Source2" />
+            <Edge From="18" To="21" Label="Source2" />
+            <Edge From="19" To="22" Label="Source1" />
+            <Edge From="20" To="22" Label="Source2" />
+            <Edge From="21" To="22" Label="Source3" />
+            <Edge From="22" To="24" Label="Source1" />
+            <Edge From="23" To="24" Label="Source2" />
+            <Edge From="24" To="26" Label="Source1" />
+            <Edge From="25" To="26" Label="Source2" />
             <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source2" />
+            <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
             <Edge From="29" To="30" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
-            <Edge From="32" To="34" Label="Source1" />
-            <Edge From="32" To="36" Label="Source2" />
-            <Edge From="33" To="34" Label="Source2" />
+            <Edge From="30" To="32" Label="Source1" />
+            <Edge From="31" To="32" Label="Source2" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
             <Edge From="34" To="35" Label="Source1" />
             <Edge From="35" To="36" Label="Source1" />
-            <Edge From="36" To="38" Label="Source1" />
-            <Edge From="37" To="38" Label="Source2" />
+            <Edge From="36" To="37" Label="Source1" />
+            <Edge From="37" To="38" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="39" To="43" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="41" To="43" Label="Source2" />
+            <Edge From="42" To="43" Label="Source3" />
+            <Edge From="43" To="44" Label="Source2" />
+            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="45" To="46" Label="Source1" />
+            <Edge From="46" To="47" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2188,6 +2346,9 @@ it.Item2.Item2 as TrialType)</scr:Expression>
                 <io:Suffix>None</io:Suffix>
                 <io:IncludeHeader>true</io:IncludeHeader>
               </Expression>
+              <Expression xsi:type="SubscribeSubject">
+                <Name>TaskFeedback</Name>
+              </Expression>
             </Nodes>
             <Edges>
               <Edge From="0" To="2" Label="Source1" />
@@ -2205,6 +2366,458 @@ it.Item2.Item2 as TrialType)</scr:Expression>
             </Edges>
           </Workflow>
         </Builder>
+      </Expression>
+      <Expression xsi:type="GroupWorkflow">
+        <Name>PylonCamera</Name>
+        <Workflow>
+          <Nodes>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Ready</Name>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Equal">
+                    <Operand xsi:type="BooleanProperty">
+                      <Value>false</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="port:SerialWriteLine">
+                <port:PortName>Nano</port:PortName>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StopCamTrigger</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>1</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="port:SerialWriteLine">
+                <port:PortName>Nano</port:PortName>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="FrameRate" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>30</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="rx:BehaviorSubject">
+              <Name>Framerate</Name>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="Value" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>Ready</Name>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="Equal">
+                    <Operand xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Operand>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="1" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="IntProperty">
+                <Value>30</Value>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:Take">
+                <rx:Count>1</rx:Count>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="port:SerialWriteLine">
+                <port:PortName>Nano</port:PortName>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FrameRate" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ParameterFile" />
+              <Property Name="SerialNumber" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="pylon:PylonCapture">
+                <pylon:SerialNumber>40238998</pylon:SerialNumber>
+                <pylon:ParameterFile>pylon settings\a2A1920-160umBAS_40238985_trigger_highgain.pfs</pylon:ParameterFile>
+                <pylon:GrabStrategy>OneByOne</pylon:GrabStrategy>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:Crop">
+                  <cv:RegionOfInterest>
+                    <cv:X>756</cv:X>
+                    <cv:Y>480</cv:Y>
+                    <cv:Width>1164</cv:Width>
+                    <cv:Height>715</cv:Height>
+                  </cv:RegionOfInterest>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="RecordVideo" />
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:VideoWriter">
+                  <cv:FileName>D:\Data\vid1_.avi</cv:FileName>
+                  <cv:Suffix>Timestamp</cv:Suffix>
+                  <cv:Buffered>true</cv:Buffered>
+                  <cv:Overwrite>false</cv:Overwrite>
+                  <cv:FourCC>FMP4</cv:FourCC>
+                  <cv:FrameRate>30</cv:FrameRate>
+                  <cv:FrameSize>
+                    <cv:Width>1920</cv:Width>
+                    <cv:Height>1200</cv:Height>
+                  </cv:FrameSize>
+                  <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="SubscribeSubject">
+              <Name>StopRecording</Name>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:TakeUntil" />
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FrameRate" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="OutputArguments" DisplayName="Output1" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="ffmpeg:VideoWriter">
+                <ffmpeg:FileName>D:\Data\vid1_.mp4</ffmpeg:FileName>
+                <ffmpeg:Suffix>Timestamp</ffmpeg:Suffix>
+                <ffmpeg:Overwrite>false</ffmpeg:Overwrite>
+                <ffmpeg:FrameRate>30</ffmpeg:FrameRate>
+                <ffmpeg:OutputArguments>-c:v h264_nvenc -preset:v p7 -tune:v hq -rc:v vbr -cq:v 40 -b:v 0 -profile:v high</ffmpeg:OutputArguments>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FrameRate" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="ParameterFile" DisplayName="Parameterfile2" />
+              <Property Name="SerialNumber" DisplayName="SerialNumber2" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="pylon:PylonCapture">
+                <pylon:SerialNumber>40238985</pylon:SerialNumber>
+                <pylon:ParameterFile>pylon settings\a2A1920-160umBAS_40238985_trigger_mediumgain.pfs</pylon:ParameterFile>
+                <pylon:GrabStrategy>OneByOne</pylon:GrabStrategy>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>Image</Selector>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:Crop">
+                  <cv:RegionOfInterest>
+                    <cv:X>894</cv:X>
+                    <cv:Y>490</cv:Y>
+                    <cv:Width>1026</cv:Width>
+                    <cv:Height>710</cv:Height>
+                  </cv:RegionOfInterest>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="Disable">
+              <Builder xsi:type="Combinator">
+                <Combinator xsi:type="cv:VideoWriter">
+                  <cv:FileName>D:\Data\vid2_.avi</cv:FileName>
+                  <cv:Suffix>Timestamp</cv:Suffix>
+                  <cv:Buffered>true</cv:Buffered>
+                  <cv:Overwrite>false</cv:Overwrite>
+                  <cv:FourCC>FMP4</cv:FourCC>
+                  <cv:FrameRate>30</cv:FrameRate>
+                  <cv:FrameSize>
+                    <cv:Width>1920</cv:Width>
+                    <cv:Height>1200</cv:Height>
+                  </cv:FrameSize>
+                  <cv:ResizeInterpolation>NearestNeighbor</cv:ResizeInterpolation>
+                </Combinator>
+              </Builder>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:TakeUntil" />
+            </Expression>
+            <Expression xsi:type="PropertyMapping">
+              <PropertyMappings>
+                <Property Name="FrameRate" />
+              </PropertyMappings>
+            </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="OutputArguments" DisplayName="Output2" />
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="ffmpeg:VideoWriter">
+                <ffmpeg:FileName>D:\Data\vid2_.mp4</ffmpeg:FileName>
+                <ffmpeg:Suffix>Timestamp</ffmpeg:Suffix>
+                <ffmpeg:Overwrite>false</ffmpeg:Overwrite>
+                <ffmpeg:FrameRate>30</ffmpeg:FrameRate>
+                <ffmpeg:OutputArguments>-c:v h264_nvenc -preset:v p7 -tune:v hq -rc:v vbr -cq:v 40 -b:v 0 -profile:v high</ffmpeg:OutputArguments>
+              </Combinator>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>GrabResult</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>SkippedImageCount,ImageNumber,ID,Timestamp,ErrorCode,GrabSucceeded</Selector>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+it.Item1 as SkippedImageCount,
+it.Item2 as ImageNumber,
+it.Item3 as ID,
+it.Item4 as Timestamp,
+it.Item5 as ErrorCode,
+it.Item6 as GrabSucceeded
+)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:TakeUntil" />
+            </Expression>
+            <Expression xsi:type="io:CsvWriter">
+              <io:FileName>D:\Data\grab2.csv</io:FileName>
+              <io:Append>false</io:Append>
+              <io:Overwrite>false</io:Overwrite>
+              <io:Suffix>Timestamp</io:Suffix>
+              <io:IncludeHeader>true</io:IncludeHeader>
+              <io:Selector />
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>GrabResult</Selector>
+            </Expression>
+            <Expression xsi:type="MemberSelector">
+              <Selector>SkippedImageCount,ImageNumber,ID,Timestamp,ErrorCode,GrabSucceeded</Selector>
+            </Expression>
+            <Expression xsi:type="rx:Condition">
+              <Workflow>
+                <Nodes>
+                  <Expression xsi:type="WorkflowInput">
+                    <Name>Source1</Name>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" />
+                  </Expression>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="BooleanProperty">
+                      <Value>true</Value>
+                    </Combinator>
+                  </Expression>
+                  <Expression xsi:type="WorkflowOutput" />
+                </Nodes>
+                <Edges>
+                  <Edge From="0" To="2" Label="Source1" />
+                  <Edge From="1" To="2" Label="Source2" />
+                  <Edge From="2" To="3" Label="Source1" />
+                </Edges>
+              </Workflow>
+            </Expression>
+            <Expression xsi:type="scr:ExpressionTransform">
+              <scr:Expression>new(
+it.Item1 as SkippedImageCount,
+it.Item2 as ImageNumber,
+it.Item3 as ID,
+it.Item4 as Timestamp,
+it.Item5 as ErrorCode,
+it.Item6 as GrabSucceeded
+)</scr:Expression>
+            </Expression>
+            <Expression xsi:type="Combinator">
+              <Combinator xsi:type="rx:TakeUntil" />
+            </Expression>
+            <Expression xsi:type="io:CsvWriter">
+              <io:FileName>D:\Data\grab1.csv</io:FileName>
+              <io:Append>false</io:Append>
+              <io:Overwrite>false</io:Overwrite>
+              <io:Suffix>Timestamp</io:Suffix>
+              <io:IncludeHeader>true</io:IncludeHeader>
+              <io:Selector />
+            </Expression>
+          </Nodes>
+          <Edges>
+            <Edge From="0" To="1" Label="Source1" />
+            <Edge From="1" To="2" Label="Source2" />
+            <Edge From="2" To="3" Label="Source1" />
+            <Edge From="4" To="5" Label="Source2" />
+            <Edge From="5" To="6" Label="Source1" />
+            <Edge From="7" To="8" Label="Source1" />
+            <Edge From="8" To="9" Label="Source1" />
+            <Edge From="9" To="10" Label="Source1" />
+            <Edge From="9" To="16" Label="Source1" />
+            <Edge From="9" To="26" Label="Source1" />
+            <Edge From="9" To="29" Label="Source1" />
+            <Edge From="9" To="37" Label="Source1" />
+            <Edge From="10" To="13" Label="Source1" />
+            <Edge From="11" To="12" Label="Source1" />
+            <Edge From="12" To="13" Label="Source2" />
+            <Edge From="13" To="14" Label="Source1" />
+            <Edge From="14" To="15" Label="Source1" />
+            <Edge From="16" To="23" Label="Source1" />
+            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="18" To="19" Label="Source1" />
+            <Edge From="18" To="46" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="20" To="22" Label="Source1" />
+            <Edge From="21" To="22" Label="Source2" />
+            <Edge From="21" To="34" Label="Source2" />
+            <Edge From="21" To="42" Label="Source2" />
+            <Edge From="21" To="48" Label="Source2" />
+            <Edge From="22" To="23" Label="Source2" />
+            <Edge From="23" To="25" Label="Source1" />
+            <Edge From="24" To="25" Label="Source2" />
+            <Edge From="24" To="36" Label="Source2" />
+            <Edge From="24" To="44" Label="Source2" />
+            <Edge From="24" To="50" Label="Source2" />
+            <Edge From="25" To="28" Label="Source1" />
+            <Edge From="26" To="28" Label="Source2" />
+            <Edge From="27" To="28" Label="Source3" />
+            <Edge From="29" To="35" Label="Source1" />
+            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="31" To="40" Label="Source1" />
+            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="33" To="34" Label="Source1" />
+            <Edge From="34" To="35" Label="Source2" />
+            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="36" To="39" Label="Source1" />
+            <Edge From="37" To="39" Label="Source2" />
+            <Edge From="38" To="39" Label="Source3" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="42" To="43" Label="Source1" />
+            <Edge From="43" To="44" Label="Source1" />
+            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="46" To="47" Label="Source1" />
+            <Edge From="47" To="48" Label="Source1" />
+            <Edge From="48" To="49" Label="Source1" />
+            <Edge From="49" To="50" Label="Source1" />
+            <Edge From="50" To="51" Label="Source1" />
+          </Edges>
+        </Workflow>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>SendTask</Name>
@@ -2355,26 +2968,10 @@ it.Item2.Item2 as TrialType)</scr:Expression>
                 </Edges>
               </Workflow>
             </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="port:SerialWriteLine">
-                <port:PortName>Task</port:PortName>
-                <port:NewLine>\n\r</port:NewLine>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="BooleanProperty">
-                <Value>false</Value>
-              </Combinator>
+            <Expression xsi:type="MulticastSubject">
+              <Name>ToTask</Name>
             </Expression>
             <Expression xsi:type="WorkflowOutput" />
-            <Expression xsi:type="Combinator">
-              <Combinator xsi:type="StringProperty">
-                <Value>N</Value>
-              </Combinator>
-            </Expression>
-            <Expression xsi:type="MulticastSubject">
-              <Name>Trialtype</Name>
-            </Expression>
           </Nodes>
           <Edges>
             <Edge From="0" To="1" Label="Source1" />
@@ -2397,10 +2994,30 @@ it.Item2.Item2 as TrialType)</scr:Expression>
             <Edge From="18" To="19" Label="Source2" />
             <Edge From="19" To="20" Label="Source1" />
             <Edge From="20" To="21" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="23" To="24" Label="Source1" />
           </Edges>
         </Workflow>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="wie:KeyDown">
+          <wie:Filter>End</wie:Filter>
+          <wie:SuppressRepetitions>false</wie:SuppressRepetitions>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="BooleanProperty">
+          <Value>true</Value>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>StopCamTrigger</Name>
+      </Expression>
+      <Expression xsi:type="Combinator">
+        <Combinator xsi:type="rx:Delay">
+          <rx:DueTime>PT10S</rx:DueTime>
+        </Combinator>
+      </Expression>
+      <Expression xsi:type="rx:BehaviorSubject">
+        <Name>StopRecording</Name>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>ReceiveTask</Name>
@@ -2486,13 +3103,17 @@ it.Item2.Item2 as TrialType)</scr:Expression>
       <Edge From="0" To="1" Label="Source1" />
       <Edge From="1" To="2" Label="Source1" />
       <Edge From="2" To="3" Label="Source1" />
-      <Edge From="5" To="7" Label="Source1" />
-      <Edge From="6" To="7" Label="Source2" />
-      <Edge From="7" To="8" Label="Source1" />
-      <Edge From="12" To="13" Label="Source1" />
+      <Edge From="6" To="8" Label="Source1" />
+      <Edge From="7" To="8" Label="Source2" />
+      <Edge From="8" To="9" Label="Source1" />
       <Edge From="13" To="14" Label="Source1" />
       <Edge From="14" To="15" Label="Source1" />
       <Edge From="15" To="16" Label="Source1" />
+      <Edge From="16" To="17" Label="Source1" />
+      <Edge From="21" To="22" Label="Source1" />
+      <Edge From="22" To="23" Label="Source1" />
+      <Edge From="23" To="24" Label="Source1" />
+      <Edge From="24" To="25" Label="Source1" />
     </Edges>
   </Workflow>
 </WorkflowBuilder>
