@@ -186,7 +186,7 @@
                     <mx:VoltageUnits>Volts</mx:VoltageUnits>
                   </mx:AnalogInputChannelConfiguration>
                   <mx:AnalogInputChannelConfiguration>
-                    <mx:ChannelName>VisualStim</mx:ChannelName>
+                    <mx:ChannelName>VisualStim (5)</mx:ChannelName>
                     <mx:MinimumValue>-10</mx:MinimumValue>
                     <mx:MaximumValue>10</mx:MaximumValue>
                     <mx:PhysicalChannel>Dev1/ai5</mx:PhysicalChannel>
@@ -361,6 +361,10 @@
                 <Value>0</Value>
               </Combinator>
             </Expression>
+            <Expression xsi:type="Annotation">
+              <Name>Set the trial type and amount of incorr stimuli (check in sequence)</Name>
+              <Text><![CDATA[set the position (0, 1 or 2 for example) of where the incorrect stimuli appears in the sequence. This will only occur when trial randomization = 0]]></Text>
+            </Expression>
             <Expression xsi:type="rx:BehaviorSubject">
               <Name>TrialRandomization</Name>
             </Expression>
@@ -479,29 +483,30 @@
             <Edge From="10" To="11" Label="Source1" />
             <Edge From="12" To="13" Label="Source1" />
             <Edge From="14" To="15" Label="Source1" />
-            <Edge From="15" To="16" Label="Source1" />
-            <Edge From="17" To="18" Label="Source1" />
+            <Edge From="15" To="17" Label="Source1" />
+            <Edge From="16" To="17" Label="Source2" />
             <Edge From="18" To="19" Label="Source1" />
-            <Edge From="20" To="28" Label="Source1" />
-            <Edge From="21" To="22" Label="Source1" />
-            <Edge From="21" To="24" Label="Source1" />
+            <Edge From="19" To="20" Label="Source1" />
+            <Edge From="21" To="29" Label="Source1" />
             <Edge From="22" To="23" Label="Source1" />
-            <Edge From="23" To="26" Label="Source1" />
-            <Edge From="23" To="33" Label="Source1" />
-            <Edge From="24" To="25" Label="Source1" />
-            <Edge From="25" To="26" Label="Source2" />
-            <Edge From="25" To="32" Label="Source1" />
-            <Edge From="26" To="27" Label="Source1" />
-            <Edge From="27" To="28" Label="Source2" />
+            <Edge From="22" To="25" Label="Source1" />
+            <Edge From="23" To="24" Label="Source1" />
+            <Edge From="24" To="27" Label="Source1" />
+            <Edge From="24" To="34" Label="Source1" />
+            <Edge From="25" To="26" Label="Source1" />
+            <Edge From="26" To="27" Label="Source2" />
+            <Edge From="26" To="33" Label="Source1" />
+            <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source2" />
-            <Edge From="29" To="30" Label="Source1" />
-            <Edge From="29" To="31" Label="Source1" />
-            <Edge From="34" To="35" Label="Source1" />
+            <Edge From="29" To="30" Label="Source2" />
+            <Edge From="30" To="31" Label="Source1" />
+            <Edge From="30" To="32" Label="Source1" />
             <Edge From="35" To="36" Label="Source1" />
             <Edge From="36" To="37" Label="Source1" />
             <Edge From="37" To="38" Label="Source1" />
-            <Edge From="39" To="40" Label="Source1" />
-            <Edge From="41" To="42" Label="Source1" />
+            <Edge From="38" To="39" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="42" To="43" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -563,7 +568,7 @@
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="p1:CreateDiscreteUniform">
                       <p1:Lower>0</p1:Lower>
-                      <p1:Upper>3</p1:Upper>
+                      <p1:Upper>6</p1:Upper>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -642,7 +647,7 @@
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>0</Value>
+                <Value>5</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -742,9 +747,12 @@
                 <Name>HowManyIncorrectStimuli</Name>
               </Builder>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="G trial max+1" />
+            </Expression>
             <Expression xsi:type="LessThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>1</Value>
+                <Value>6</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -783,9 +791,12 @@
             <Expression xsi:type="MulticastSubject">
               <Name>Trialtype</Name>
             </Expression>
+            <Expression xsi:type="ExternalizedMapping">
+              <Property Name="Value" DisplayName="N trial min" />
+            </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>0</Value>
+                <Value>5</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -1413,9 +1424,12 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                     <Name>correct trials</Name>
                     <Text><![CDATA[]]></Text>
                   </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="0 until this value are correct" />
+                  </Expression>
                   <Expression xsi:type="LessThan">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>1</Value>
+                      <Value>6</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -1446,9 +1460,16 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                       </Edges>
                     </Workflow>
                   </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>1 stim inc</Name>
+                    <Text><![CDATA[]]></Text>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="trial rand value for 1 stim inc" />
+                  </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>3</Value>
+                      <Value>6</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -1571,9 +1592,16 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                       <Value>20</Value>
                     </Operand>
                   </Expression>
+                  <Expression xsi:type="Annotation">
+                    <Name>2 stim Incorr</Name>
+                    <Text><![CDATA[for trial randomization =  this, all 3 stim are incorrect]]></Text>
+                  </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="trial rand value for 2 stim inc" />
+                  </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>2</Value>
+                      <Value>7</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -1693,9 +1721,12 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                     <Name>All 3 stim Incorr</Name>
                     <Text><![CDATA[for trial randomization =  this, all 3 stim are incorrect]]></Text>
                   </Expression>
+                  <Expression xsi:type="ExternalizedMapping">
+                    <Property Name="Value" DisplayName="trial rand value for 3 stim inc" />
+                  </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>1</Value>
+                      <Value>8</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -1748,10 +1779,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                   <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="10" Label="Source1" />
-                  <Edge From="6" To="33" Label="Source1" />
-                  <Edge From="6" To="38" Label="Source1" />
-                  <Edge From="6" To="46" Label="Source2" />
+                  <Edge From="6" To="36" Label="Source1" />
+                  <Edge From="6" To="41" Label="Source1" />
                   <Edge From="6" To="51" Label="Source2" />
+                  <Edge From="6" To="56" Label="Source2" />
                   <Edge From="7" To="8" Label="Source1" />
                   <Edge From="8" To="10" Label="Source2" />
                   <Edge From="9" To="10" Label="Source3" />
@@ -1769,58 +1800,64 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                   <Edge From="18" To="20" Label="Source1" />
                   <Edge From="19" To="20" Label="Source2" />
                   <Edge From="20" To="21" Label="Source2" />
-                  <Edge From="21" To="26" Label="Source1" />
-                  <Edge From="21" To="29" Label="Source2" />
-                  <Edge From="21" To="44" Label="Source2" />
-                  <Edge From="21" To="58" Label="Source1" />
-                  <Edge From="22" To="24" Label="Source1" />
-                  <Edge From="22" To="27" Label="Source1" />
-                  <Edge From="22" To="42" Label="Source1" />
-                  <Edge From="22" To="56" Label="Source1" />
-                  <Edge From="23" To="24" Label="Source2" />
-                  <Edge From="24" To="25" Label="Source1" />
-                  <Edge From="25" To="26" Label="Source2" />
-                  <Edge From="26" To="60" Label="Source1" />
-                  <Edge From="27" To="28" Label="Source1" />
-                  <Edge From="28" To="29" Label="Source1" />
-                  <Edge From="29" To="35" Label="Source1" />
-                  <Edge From="29" To="40" Label="Source1" />
+                  <Edge From="21" To="27" Label="Source1" />
+                  <Edge From="21" To="32" Label="Source2" />
+                  <Edge From="21" To="49" Label="Source2" />
+                  <Edge From="21" To="64" Label="Source1" />
+                  <Edge From="22" To="25" Label="Source1" />
+                  <Edge From="22" To="30" Label="Source1" />
+                  <Edge From="22" To="47" Label="Source1" />
+                  <Edge From="22" To="62" Label="Source1" />
+                  <Edge From="23" To="25" Label="Source2" />
+                  <Edge From="24" To="25" Label="Source3" />
+                  <Edge From="25" To="26" Label="Source1" />
+                  <Edge From="26" To="27" Label="Source2" />
+                  <Edge From="27" To="66" Label="Source1" />
+                  <Edge From="28" To="30" Label="Source2" />
+                  <Edge From="29" To="30" Label="Source3" />
                   <Edge From="30" To="31" Label="Source1" />
-                  <Edge From="30" To="36" Label="Source1" />
-                  <Edge From="30" To="45" Label="Source1" />
-                  <Edge From="30" To="49" Label="Source1" />
-                  <Edge From="31" To="33" Label="Source2" />
-                  <Edge From="32" To="33" Label="Source3" />
+                  <Edge From="31" To="32" Label="Source1" />
+                  <Edge From="32" To="38" Label="Source1" />
+                  <Edge From="32" To="43" Label="Source1" />
                   <Edge From="33" To="34" Label="Source1" />
-                  <Edge From="34" To="35" Label="Source2" />
-                  <Edge From="35" To="60" Label="Source2" />
-                  <Edge From="36" To="38" Label="Source2" />
-                  <Edge From="37" To="38" Label="Source3" />
-                  <Edge From="38" To="39" Label="Source1" />
-                  <Edge From="39" To="40" Label="Source2" />
-                  <Edge From="40" To="41" Label="Source1" />
-                  <Edge From="41" To="60" Label="Source3" />
-                  <Edge From="42" To="43" Label="Source1" />
+                  <Edge From="33" To="39" Label="Source1" />
+                  <Edge From="33" To="50" Label="Source1" />
+                  <Edge From="33" To="54" Label="Source1" />
+                  <Edge From="34" To="36" Label="Source2" />
+                  <Edge From="35" To="36" Label="Source3" />
+                  <Edge From="36" To="37" Label="Source1" />
+                  <Edge From="37" To="38" Label="Source2" />
+                  <Edge From="38" To="66" Label="Source2" />
+                  <Edge From="39" To="41" Label="Source2" />
+                  <Edge From="40" To="41" Label="Source3" />
+                  <Edge From="41" To="42" Label="Source1" />
+                  <Edge From="42" To="43" Label="Source2" />
                   <Edge From="43" To="44" Label="Source1" />
-                  <Edge From="44" To="48" Label="Source1" />
-                  <Edge From="44" To="53" Label="Source1" />
-                  <Edge From="45" To="46" Label="Source1" />
-                  <Edge From="46" To="47" Label="Source1" />
-                  <Edge From="47" To="48" Label="Source2" />
-                  <Edge From="48" To="60" Label="Source4" />
-                  <Edge From="49" To="51" Label="Source1" />
-                  <Edge From="50" To="51" Label="Source3" />
+                  <Edge From="44" To="66" Label="Source3" />
+                  <Edge From="45" To="47" Label="Source2" />
+                  <Edge From="46" To="47" Label="Source3" />
+                  <Edge From="47" To="48" Label="Source1" />
+                  <Edge From="48" To="49" Label="Source1" />
+                  <Edge From="49" To="53" Label="Source1" />
+                  <Edge From="49" To="58" Label="Source1" />
+                  <Edge From="50" To="51" Label="Source1" />
                   <Edge From="51" To="52" Label="Source1" />
                   <Edge From="52" To="53" Label="Source2" />
-                  <Edge From="53" To="54" Label="Source1" />
-                  <Edge From="54" To="60" Label="Source5" />
-                  <Edge From="55" To="56" Label="Source2" />
+                  <Edge From="53" To="66" Label="Source4" />
+                  <Edge From="54" To="56" Label="Source1" />
+                  <Edge From="55" To="56" Label="Source3" />
                   <Edge From="56" To="57" Label="Source1" />
                   <Edge From="57" To="58" Label="Source2" />
                   <Edge From="58" To="59" Label="Source1" />
-                  <Edge From="59" To="60" Label="Source6" />
-                  <Edge From="60" To="61" Label="Source1" />
-                  <Edge From="61" To="62" Label="Source1" />
+                  <Edge From="59" To="66" Label="Source5" />
+                  <Edge From="60" To="62" Label="Source2" />
+                  <Edge From="61" To="62" Label="Source3" />
+                  <Edge From="62" To="63" Label="Source1" />
+                  <Edge From="63" To="64" Label="Source2" />
+                  <Edge From="64" To="65" Label="Source1" />
+                  <Edge From="65" To="66" Label="Source6" />
+                  <Edge From="66" To="67" Label="Source1" />
+                  <Edge From="67" To="68" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1839,10 +1876,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="8" To="18" Label="Source1" />
             <Edge From="8" To="25" Label="Source1" />
             <Edge From="8" To="27" Label="Source1" />
-            <Edge From="8" To="30" Label="Source1" />
-            <Edge From="8" To="32" Label="Source1" />
-            <Edge From="8" To="35" Label="Source1" />
+            <Edge From="8" To="31" Label="Source1" />
+            <Edge From="8" To="33" Label="Source1" />
             <Edge From="8" To="37" Label="Source1" />
+            <Edge From="8" To="39" Label="Source1" />
             <Edge From="9" To="10" Label="Source2" />
             <Edge From="9" To="12" Label="Source2" />
             <Edge From="10" To="11" Label="Source1" />
@@ -1860,27 +1897,29 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             <Edge From="25" To="26" Label="Source1" />
             <Edge From="27" To="28" Label="Source1" />
             <Edge From="28" To="29" Label="Source1" />
-            <Edge From="30" To="31" Label="Source1" />
-            <Edge From="31" To="32" Label="Source2" />
-            <Edge From="32" To="33" Label="Source1" />
+            <Edge From="30" To="31" Label="Source2" />
+            <Edge From="31" To="32" Label="Source1" />
+            <Edge From="32" To="33" Label="Source2" />
             <Edge From="33" To="34" Label="Source1" />
-            <Edge From="35" To="36" Label="Source1" />
+            <Edge From="34" To="35" Label="Source1" />
             <Edge From="36" To="37" Label="Source2" />
             <Edge From="37" To="38" Label="Source1" />
-            <Edge From="38" To="39" Label="Source1" />
-            <Edge From="40" To="42" Label="Source1" />
-            <Edge From="41" To="42" Label="Source2" />
-            <Edge From="42" To="43" Label="Source1" />
-            <Edge From="42" To="45" Label="Source2" />
-            <Edge From="43" To="45" Label="Source1" />
-            <Edge From="44" To="45" Label="Source3" />
-            <Edge From="45" To="46" Label="Source1" />
-            <Edge From="45" To="48" Label="Source1" />
-            <Edge From="47" To="48" Label="Source2" />
-            <Edge From="49" To="50" Label="Source1" />
-            <Edge From="49" To="52" Label="Source1" />
-            <Edge From="50" To="51" Label="Source1" />
+            <Edge From="38" To="39" Label="Source2" />
+            <Edge From="39" To="40" Label="Source1" />
+            <Edge From="40" To="41" Label="Source1" />
+            <Edge From="42" To="44" Label="Source1" />
+            <Edge From="43" To="44" Label="Source2" />
+            <Edge From="44" To="45" Label="Source1" />
+            <Edge From="44" To="47" Label="Source2" />
+            <Edge From="45" To="47" Label="Source1" />
+            <Edge From="46" To="47" Label="Source3" />
+            <Edge From="47" To="48" Label="Source1" />
+            <Edge From="47" To="50" Label="Source1" />
+            <Edge From="49" To="50" Label="Source2" />
+            <Edge From="51" To="52" Label="Source1" />
+            <Edge From="51" To="54" Label="Source1" />
             <Edge From="52" To="53" Label="Source1" />
+            <Edge From="54" To="55" Label="Source1" />
           </Edges>
         </Workflow>
       </Expression>
@@ -2025,7 +2064,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>4</SpatialFrequency>
+              <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
               <Angle>90</Angle>
@@ -2042,7 +2081,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>4</SpatialFrequency>
+              <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
               <Angle>90</Angle>
@@ -2059,7 +2098,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>4</SpatialFrequency>
+              <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
               <Angle>90</Angle>
@@ -2110,7 +2149,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT3S</gl:DueTime>
+                <gl:DueTime>PT2S</gl:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2422,15 +2461,15 @@ it.Item2.Item3 as TaskFeedback)</scr:Expression>
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
-              <ExtentX>0.5</ExtentX>
-              <ExtentY>0.5</ExtentY>
-              <LocationX>1.7</LocationX>
-              <LocationY>-0.7</LocationY>
+              <ExtentX>0.1</ExtentX>
+              <ExtentY>0.1</ExtentY>
+              <LocationX>-0.6</LocationX>
+              <LocationY>-0.93</LocationY>
               <Layer>0</Layer>
               <Angle>0</Angle>
-              <ColorR>1</ColorR>
-              <ColorG>1</ColorG>
-              <ColorB>1</ColorB>
+              <ColorR>0</ColorR>
+              <ColorG>0</ColorG>
+              <ColorB>0</ColorB>
               <ColorA>1</ColorA>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2508,103 +2547,105 @@ it.Item2.Item3 as TaskFeedback)</scr:Expression>
           </Edges>
         </Workflow>
       </Expression>
-      <Expression xsi:type="GroupWorkflow">
-        <Name>Log Data</Name>
-        <Workflow>
-          <Nodes>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>WriteStimNum</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>StimID</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:Zip" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>TrialNum</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:Timestamp" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="SubscribeSubject">
-                <Name>TrialRandomization</Name>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:Zip" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:WithLatestFrom" />
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Combinator">
-                <Combinator xsi:type="rx:Skip">
-                  <rx:Count>1</rx:Count>
-                </Combinator>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="MemberSelector">
-                <Selector>Item1,Item2</Selector>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="scr:ExpressionTransform">
-                <scr:Expression>new(
+      <Expression xsi:type="Disable">
+        <Builder xsi:type="GroupWorkflow">
+          <Name>Log Data</Name>
+          <Workflow>
+            <Nodes>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="SubscribeSubject">
+                  <Name>WriteStimNum</Name>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="SubscribeSubject">
+                  <Name>StimID</Name>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:Zip" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="SubscribeSubject">
+                  <Name>TrialNum</Name>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:Timestamp" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="SubscribeSubject">
+                  <Name>TrialRandomization</Name>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:Zip" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:WithLatestFrom" />
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Combinator">
+                  <Combinator xsi:type="rx:Skip">
+                    <rx:Count>1</rx:Count>
+                  </Combinator>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="MemberSelector">
+                  <Selector>Item1,Item2</Selector>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="scr:ExpressionTransform">
+                  <scr:Expression>new(
 it.Item1.Item1 as StimulusNumber,
 it.Item1.Item2 as StimulusElement,
 it.Item2.Item1 as TrialNum,
 it.Item2.Item2 as TrialType)</scr:Expression>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="Annotation">
-                <Name>check alignment stim Num and stim element</Name>
-                <Text><![CDATA[]]></Text>
-              </Builder>
-            </Expression>
-            <Expression xsi:type="Disable">
-              <Builder xsi:type="io:CsvWriter">
-                <io:FileName>metaData.csv</io:FileName>
-                <io:Delimiter>;</io:Delimiter>
-                <io:Append>false</io:Append>
-                <io:Overwrite>true</io:Overwrite>
-                <io:Suffix>None</io:Suffix>
-                <io:IncludeHeader>true</io:IncludeHeader>
-              </Builder>
-            </Expression>
-          </Nodes>
-          <Edges>
-            <Edge From="0" To="2" Label="Source1" />
-            <Edge From="1" To="2" Label="Source2" />
-            <Edge From="2" To="7" Label="Source1" />
-            <Edge From="3" To="4" Label="Source1" />
-            <Edge From="4" To="6" Label="Source1" />
-            <Edge From="5" To="6" Label="Source2" />
-            <Edge From="6" To="7" Label="Source2" />
-            <Edge From="7" To="8" Label="Source1" />
-            <Edge From="8" To="9" Label="Source1" />
-            <Edge From="9" To="10" Label="Source1" />
-            <Edge From="10" To="12" Label="Source1" />
-            <Edge From="11" To="12" Label="Source2" />
-          </Edges>
-        </Workflow>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="Annotation">
+                  <Name>check alignment stim Num and stim element</Name>
+                  <Text><![CDATA[]]></Text>
+                </Builder>
+              </Expression>
+              <Expression xsi:type="Disable">
+                <Builder xsi:type="io:CsvWriter">
+                  <io:FileName>metaData.csv</io:FileName>
+                  <io:Delimiter>;</io:Delimiter>
+                  <io:Append>false</io:Append>
+                  <io:Overwrite>true</io:Overwrite>
+                  <io:Suffix>None</io:Suffix>
+                  <io:IncludeHeader>true</io:IncludeHeader>
+                </Builder>
+              </Expression>
+            </Nodes>
+            <Edges>
+              <Edge From="0" To="2" Label="Source1" />
+              <Edge From="1" To="2" Label="Source2" />
+              <Edge From="2" To="7" Label="Source1" />
+              <Edge From="3" To="4" Label="Source1" />
+              <Edge From="4" To="6" Label="Source1" />
+              <Edge From="5" To="6" Label="Source2" />
+              <Edge From="6" To="7" Label="Source2" />
+              <Edge From="7" To="8" Label="Source1" />
+              <Edge From="8" To="9" Label="Source1" />
+              <Edge From="9" To="10" Label="Source1" />
+              <Edge From="10" To="12" Label="Source1" />
+              <Edge From="11" To="12" Label="Source2" />
+            </Edges>
+          </Workflow>
+        </Builder>
       </Expression>
       <Expression xsi:type="GroupWorkflow">
         <Name>SendTask</Name>
@@ -2699,7 +2740,7 @@ it.Item2.Item2 as TrialType)</scr:Expression>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>false</Value>
+                      <Value>true</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
