@@ -224,7 +224,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="port:CreateSerialPort">
           <port:Name>Nano</port:Name>
-          <port:PortName>COM3</port:PortName>
+          <port:PortName>COM5</port:PortName>
           <port:BaudRate>9600</port:BaudRate>
           <port:NewLine>\r\n</port:NewLine>
           <port:Parity>None</port:Parity>
@@ -557,8 +557,19 @@
                     </Workflow>
                   </Expression>
                   <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="rx:Timestamp" />
+                  </Expression>
+                  <Expression xsi:type="MemberSelector">
+                    <Selector>Timestamp.TimeOfDay.Ticks</Selector>
+                  </Expression>
+                  <Expression xsi:type="PropertyMapping">
+                    <PropertyMappings>
+                      <Property Name="Seed" />
+                    </PropertyMappings>
+                  </Expression>
+                  <Expression xsi:type="Combinator">
                     <Combinator xsi:type="num:CreateRandom">
-                      <num:Seed xsi:nil="true" />
+                      <num:Seed>-131833472</num:Seed>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -578,10 +589,8 @@
                     <Name>makes less repetitive? </Name>
                     <Text><![CDATA[need to check how to stop repetitions over 2/3?]]></Text>
                   </Expression>
-                  <Expression xsi:type="Disable">
-                    <Builder xsi:type="Combinator">
-                      <Combinator xsi:type="num:Permutation" />
-                    </Builder>
+                  <Expression xsi:type="Combinator">
+                    <Combinator xsi:type="num:Permutation" />
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
                 </Nodes>
@@ -589,12 +598,15 @@
                   <Edge From="0" To="2" Label="Source1" />
                   <Edge From="1" To="2" Label="Source2" />
                   <Edge From="2" To="3" Label="Source1" />
-                  <Edge From="3" To="5" Label="Source1" />
-                  <Edge From="4" To="5" Label="Source2" />
+                  <Edge From="3" To="4" Label="Source1" />
+                  <Edge From="4" To="5" Label="Source1" />
                   <Edge From="5" To="6" Label="Source1" />
                   <Edge From="6" To="8" Label="Source1" />
                   <Edge From="7" To="8" Label="Source2" />
                   <Edge From="8" To="9" Label="Source1" />
+                  <Edge From="9" To="11" Label="Source1" />
+                  <Edge From="10" To="11" Label="Source2" />
+                  <Edge From="11" To="12" Label="Source1" />
                 </Edges>
               </Workflow>
             </Expression>
@@ -1281,7 +1293,7 @@
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1533,7 +1545,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1575,7 +1587,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1658,7 +1670,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>false</Value>
+                            <Value>true</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -1700,7 +1712,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                         </Expression>
                         <Expression xsi:type="Combinator">
                           <Combinator xsi:type="BooleanProperty">
-                            <Value>true</Value>
+                            <Value>false</Value>
                           </Combinator>
                         </Expression>
                         <Expression xsi:type="WorkflowOutput" />
@@ -2027,7 +2039,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="BooleanProperty">
-                      <Value>true</Value>
+                      <Value>false</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="WorkflowOutput" />
@@ -2064,10 +2076,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>2</SpatialFrequency>
+              <SpatialFrequency>3</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>105</Angle>
+              <Angle>15</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -2081,10 +2093,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>2</SpatialFrequency>
+              <SpatialFrequency>3</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>105</Angle>
+              <Angle>15</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -2098,10 +2110,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>2</SpatialFrequency>
+              <SpatialFrequency>3</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>105</Angle>
+              <Angle>15</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -2141,7 +2153,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT1S</gl:DueTime>
+                <gl:DueTime>PT0.8S</gl:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2149,7 +2161,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT2S</gl:DueTime>
+                <gl:DueTime>PT1.6S</gl:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2461,9 +2473,9 @@ it.Item2.Item3 as TaskFeedback)</scr:Expression>
               </PropertyMappings>
             </Expression>
             <Expression xsi:type="IncludeWorkflow" Path="BonVision:Primitives.DrawQuad.bonsai">
-              <ExtentX>0.1</ExtentX>
-              <ExtentY>0.1</ExtentY>
-              <LocationX>-0.6</LocationX>
+              <ExtentX>0.2</ExtentX>
+              <ExtentY>0.2</ExtentY>
+              <LocationX>-0.64</LocationX>
               <LocationY>-0.93</LocationY>
               <Layer>0</Layer>
               <Angle>0</Angle>

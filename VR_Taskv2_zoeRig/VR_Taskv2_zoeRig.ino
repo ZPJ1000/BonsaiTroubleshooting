@@ -28,9 +28,9 @@ int taskoutcome = 0; //0: FA 1: Hit 2: Miss
 int toggleon = 0; // to switch between toggle states
 
 // fixed positions
-int servorest = 170; // servo position at rest
+int servorest = 120; // servo position at rest
 int servoval = servorest;// servops to drive servo more slowly
-int servotask = 120; // servo front position
+int servotask = 170; // servo front position
 int lspoutstate; // left spout touch state
 int rspoutstate; // right spout touch state
 int trialend = 0; // signal end of trial to reset flags and send serial to VR
@@ -286,8 +286,8 @@ void ServoFunc() {
   if (active == 2) {
     if (servopos == 0) {
       if (currentmillis - pretonewin - cuedur - posttonewin >= tasktime) {
-        while ( servoval > servotask ) {
-          servoval = servoval - 5;
+        while ( servoval < servotask ) {
+          servoval = servoval + 5;
           spoutmotor.write(servoval);
           digitalWriteFast(servoOut, HIGH);
 
