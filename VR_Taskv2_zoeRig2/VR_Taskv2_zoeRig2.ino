@@ -40,7 +40,7 @@ int freq_a = 4000;
 int freq_b = 7000;
 unsigned long cuedur = 500; // cue duration
 int freq = 500; // freq to be assigned
-
+bool whiteNoisePlaying = false; // Non-blocking white noise flag
 
 // sensor inputs
 int lsense;  // right spout touch sensor input
@@ -377,9 +377,12 @@ void GiveReward() {
     if (dirtouch == 1 || dirtouch == 3) {
       digitalWriteFast(lspout, HIGH);
       rewardtime = currentmillis;
-      if (rewardcuedur > 0) {
-        tone(audioamp, freq, rewardcuedur);
-      }
+     if (rewardcuedur > 0) {
+      noTone(audioamp);
+      delay(5);
+      tone(audioamp, freq, rewardcuedur);
+    }
+
       isreward = 1;
       taskoutcome = 1;
       spouton = 1;
@@ -419,18 +422,22 @@ void EndReward() {
 
 // false alarm ends task
 void FalseAlarm() {
-  if (active == 6) {
-    // optional stuff can go here, white noise
+  if (active == 6 && !whiteNoisePlaying) {
     spoutmotor.write(servorest);
-    noisetime = currentmillis;
-    while (millis() < noisetime + noisedur) {
-      digitalWrite (audioamp, generateNoise());
-      delay(1);
-    }
-    trialend = 1;
+    noisetime = millis();
+    whiteNoisePlaying = true;
   }
 
+  if (whiteNoisePlaying) {
+    if (millis() - noisetime < noisedur) {
+      digitalWrite(audioamp, generateNoise());
+    } else {
+      whiteNoisePlaying = false;
+      trialend = 1;
+    }
+  }
 }
+
 
 
 
