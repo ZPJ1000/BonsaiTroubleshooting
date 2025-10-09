@@ -378,8 +378,8 @@ void GiveReward() {
       digitalWriteFast(lspout, HIGH);
       rewardtime = currentmillis;
      if (rewardcuedur > 0) {
-      noTone(audioamp);
-      delay(5);
+//      noTone(audioamp);
+//      delay(5);
       tone(audioamp, freq, rewardcuedur);
     }
 
