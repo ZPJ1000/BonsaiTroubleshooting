@@ -224,7 +224,7 @@
       <Expression xsi:type="Combinator">
         <Combinator xsi:type="port:CreateSerialPort">
           <port:Name>Nano</port:Name>
-          <port:PortName>COM3</port:PortName>
+          <port:PortName>COM5</port:PortName>
           <port:BaudRate>9600</port:BaudRate>
           <port:NewLine>\r\n</port:NewLine>
           <port:Parity>None</port:Parity>
@@ -569,7 +569,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="num:CreateRandom">
-                      <num:Seed>1711220480</num:Seed>
+                      <num:Seed>293257600</num:Seed>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="ExternalizedMapping">
@@ -679,11 +679,11 @@
               <Text><![CDATA[the value of the trial randomization numbers which lead to incorrect trial types]]></Text>
             </Expression>
             <Expression xsi:type="ExternalizedMapping">
-              <Property Name="Value" DisplayName="Value of Trial Randomization = Incorrect" />
+              <Property Name="Value" DisplayName="Greater than this Trial Randomization = Incorrect" />
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>5</Value>
+                <Value>4</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -788,7 +788,7 @@
             </Expression>
             <Expression xsi:type="LessThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>6</Value>
+                <Value>5</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -832,7 +832,7 @@
             </Expression>
             <Expression xsi:type="GreaterThan">
               <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                <Value>5</Value>
+                <Value>4</Value>
               </Operand>
             </Expression>
             <Expression xsi:type="PropertyMapping">
@@ -1136,7 +1136,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>45</Value>
+                      <Value>90</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -1160,7 +1160,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>105</Value>
+                      <Value>180</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -1184,7 +1184,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>15</Value>
+                      <Value>90</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="rx:Condition">
@@ -1209,7 +1209,7 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>75</Value>
+                      <Value>180</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1220,22 +1220,22 @@
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
                     <Combinator xsi:type="FloatProperty">
-                      <Value>0</Value>
+                      <Value>5</Value>
                     </Combinator>
                   </Expression>
                   <Expression xsi:type="Combinator">
@@ -1343,7 +1343,7 @@
                   </Expression>
                   <Expression xsi:type="Add">
                     <Operand xsi:type="IntProperty">
-                      <Value>2</Value>
+                      <Value>0</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="Annotation">
@@ -1465,7 +1465,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                   </Expression>
                   <Expression xsi:type="LessThan">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>6</Value>
+                      <Value>5</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -1762,7 +1762,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
                   </Expression>
                   <Expression xsi:type="Equal">
                     <Operand xsi:type="WorkflowProperty" TypeArguments="sys:Int64">
-                      <Value>6</Value>
+                      <Value>5</Value>
                     </Operand>
                   </Expression>
                   <Expression xsi:type="PropertyMapping">
@@ -2103,10 +2103,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>3</SpatialFrequency>
+              <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>15</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -2120,10 +2120,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>3</SpatialFrequency>
+              <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>15</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -2137,10 +2137,10 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
               <Layer>0</Layer>
               <ExtentX>1</ExtentX>
               <ExtentY>1</ExtentY>
-              <SpatialFrequency>3</SpatialFrequency>
+              <SpatialFrequency>1</SpatialFrequency>
               <TemporalFrequency>1</TemporalFrequency>
               <Phase>0</Phase>
-              <Angle>15</Angle>
+              <Angle>45</Angle>
               <SquareWave>false</SquareWave>
               <Contrast>1</Contrast>
               <DutyCycle xsi:nil="true" />
@@ -2180,7 +2180,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT0.7S</gl:DueTime>
+                <gl:DueTime>PT1.1S</gl:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2188,7 +2188,7 @@ if you integrate another min max id, leave 1 number gap in between, otherwise lo
             </Expression>
             <Expression xsi:type="Combinator">
               <Combinator xsi:type="gl:Timer">
-                <gl:DueTime>PT1.4S</gl:DueTime>
+                <gl:DueTime>PT2.2S</gl:DueTime>
               </Combinator>
             </Expression>
             <Expression xsi:type="Combinator">
@@ -2506,9 +2506,9 @@ it.Item2.Item3 as TaskFeedback)</scr:Expression>
               <LocationY>-0.93</LocationY>
               <Layer>0</Layer>
               <Angle>0</Angle>
-              <ColorR>0</ColorR>
-              <ColorG>0</ColorG>
-              <ColorB>0</ColorB>
+              <ColorR>1</ColorR>
+              <ColorG>1</ColorG>
+              <ColorB>1</ColorB>
               <ColorA>1</ColorA>
             </Expression>
             <Expression xsi:type="Combinator">

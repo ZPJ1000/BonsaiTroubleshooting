@@ -65,7 +65,7 @@ unsigned long posttonewin = 500; // post cue delay
 unsigned long spoutopen = 100; // valve opening time
 unsigned long servodeadtime = 150; // time in which servo moves in, exclude lick detection to avoid artefacts
 unsigned long endtrialdur = 1500; // delay at end of trial, to consume reward or for miss, nothing
-unsigned long fa_endtrialdur = 3500; // longer delay at end of trial for FA
+unsigned long fa_endtrialdur = 5000; // longer delay at end of trial for FA
 unsigned long rt  = 0; // report rt back to serial
 unsigned long toggledeadtime  = 500; // disable button for this time after press
 unsigned long noisedur = 500; // white noiese dur
@@ -155,7 +155,9 @@ void setup() {
   // attach servo
   Serial.begin(115200);
   spoutmotor.attach(ch_spoutmotor);
-  spoutmotor.write(servorest);
+  spoutmotor.write(servotask);  // Force into "in" position
+  servopos = 1;  // sets servo as already 'in'
+
 
   // declare input and output channels
   pinMode(lcap, INPUT);
@@ -287,40 +289,18 @@ void   CueFunc() {
 
 // moves servo in and out depending on state of 'active' flags and delays
 void ServoFunc() {
-  // TODO wait for delay
+  // Always move to response window without servo movement
   if (active == 2) {
-    if (servopos == 0) {
-      if (currentmillis - pretonewin - cuedur - posttonewin >= tasktime) {
-        while ( servoval < servotask ) {
-          servoval = servoval + 5;
-          spoutmotor.write(servoval);
-          digitalWriteFast(servoOut, HIGH);
-
-          delay(25);
-        }
-        servopos = 1;
-        active = 3;
-        spouttime = currentmillis; // start counting time that servo has moved in
-      }
-    }
+    active = 3;
+    spouttime = currentmillis;
   }
 
   if (active == 3) {
-
     if (currentmillis - servodeadtime >= spouttime) {
       active = 4;
     }
   }
-  if (active == 0) {
-    if (servopos == 1) {
-      spoutmotor.write(servorest);
-      digitalWriteFast(servoOut, LOW);;
-      servopos = 0;
-      servoval = servorest;
-    }
-  }
 }
-
 
 // in response window check sensors
 
@@ -425,7 +405,7 @@ void EndReward() {
 // false alarm ends task
 void FalseAlarm() {
   if (active == 6 && !whiteNoisePlaying) {
-    spoutmotor.write(servorest);
+    //spoutmotor.write(servorest); // Disabled: keep servo always in
     noisetime = millis();
     whiteNoisePlaying = true;
 
