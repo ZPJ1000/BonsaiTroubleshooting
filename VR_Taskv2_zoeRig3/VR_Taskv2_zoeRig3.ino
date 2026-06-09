@@ -1,4 +1,5 @@
 
+
 /// Arduino Script to interface with VR_Task, expects a flag (0,1) to start task and a Char to define task structure
 // A and B: Corridor flags, will result in random tone with freq_a or freq_b where in corrdidor A tone A is rewarded left, tone B right,
 // the opposite directions are rewarded in corridor B
@@ -65,7 +66,7 @@ unsigned long posttonewin = 500; // post cue delay
 unsigned long spoutopen = 100; // valve opening time
 unsigned long servodeadtime = 150; // time in which servo moves in, exclude lick detection to avoid artefacts
 unsigned long endtrialdur = 1500; // delay at end of trial, to consume reward or for miss, nothing
-unsigned long fa_endtrialdur = 5000; // longer delay at end of trial for FA
+unsigned long fa_endtrialdur = 6000; // longer delay at end of trial for FA
 unsigned long rt  = 0; // report rt back to serial
 unsigned long toggledeadtime  = 500; // disable button for this time after press
 unsigned long noisedur = 500; // white noiese dur
